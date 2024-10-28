@@ -10,5 +10,10 @@
   },
   "devDependencies": {
     "vite": "^5.4.9"
+  },
+  "dependencies": {
+    "@atlaskit/button": "^20.3.0",
+    "@atlaskit/icon": "^22.24.0",
+    "@atlaskit/textfield": "^6.5.4"
   }
 }

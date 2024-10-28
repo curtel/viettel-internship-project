@@ -1,24 +1,25 @@
+import create from './components/create.js';
+
+const provinces = [
+    { id: 'HCM', name: 'TP Hồ Chí Minh' },
+    { id: 'HN', name: 'Hà Nội' },
+    { id: 'DN', name: 'Đà Nẵng' },
+    { id: 'BD', name: 'Bình Dương' },
+    { id: 'VT', name: 'Vũng Tàu' },
+];
+
 document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.querySelector('#customer-table tbody');
     const searchInput = document.getElementById('search-name');
     const searchProvince = document.getElementById('search-province');
-
-    // Array of provinces
-    const provinces = [
-        { id: 'HCM', name: 'TP Hồ Chí Minh' },
-        { id: 'HN', name: 'Hà Nội' },
-        { id: 'DN', name: 'Đà Nẵng' },
-        { id: 'BD', name: 'Bình Dương' },
-        { id: 'VT', name: 'Vũng Tàu' },
-        // Add more provinces as needed
-    ];
 
     // Sample customer data
     const customers = [
         { id: 1, name: 'Nguyễn Văn A', phone: '0901234567', province: 'TP Hồ Chí Minh', addressDetails: '123 Đường ABC' },
         { id: 2, name: 'Trần Thị B', phone: '0912345678', province: 'Hà Nội', addressDetails: '456 Đường DEF' },
         { id: 3, name: 'Lê Văn C', phone: '0923456789', province: 'Đà Nẵng', addressDetails: '789 Đường GHI' },
-        // Add more sample customers if needed
+        { id: 4, name: 'Phạm Thị D', phone: '0934567890', province: 'Bình Dương', addressDetails: '321 Đường JKL' },
+        { id: 5, name: 'Đặng Văn E', phone: '0945678901', province: 'Vũng Tàu', addressDetails: '654 Đường MNO' },
     ];
 
     // Populate the province dropdown for searching
@@ -29,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         searchProvince.appendChild(searchOption);
     });
 
-    // Function to render customer table
+    // Render customer table
     function renderTable(filteredCustomers = customers) {
         tableBody.innerHTML = '';
         filteredCustomers.forEach((customer) => {
@@ -64,4 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render the full customer list initially
     renderTable();
+
+    // Call create.js function and pass provinces
+    create(provinces);
 });

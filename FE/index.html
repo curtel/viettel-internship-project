@@ -9,7 +9,7 @@
 <body>
     <div id="app">
         <h1>Tìm Kiếm Khách Hàng</h1>
-        <script src="/path/to/main.js"></script>
+        <script src="src/main.js"></script>
 
         <!-- Search Section -->
         <div id="search-section">
@@ -19,6 +19,23 @@
                 <option value="">Chọn tỉnh</option>
                 <!-- Options will be populated by JavaScript -->
             </select>
+        </div>
+
+        <!-- Add Button -->
+        <button id="add-btn">Thêm Khách Hàng</button>
+
+        <!-- Customer Form -->
+        <div id="add-customer" style="display: none;">
+            <h2>Thêm Khách Hàng Mới</h2>
+            <form id="customer-form">
+                <input type="text" id="name" placeholder="Tên khách hàng" required>
+                <input type="text" id="phone" placeholder="Số điện thoại" required>
+                <select id="province" required>
+                    <option value="">Chọn tỉnh</option>
+                </select>
+                <input type="text" id="addressDetails" placeholder="Địa chỉ chi tiết" required>
+                <button type="submit">Thêm vào danh sách</button>
+            </form>
         </div>
 
         <!-- Customer Table -->
@@ -40,7 +57,7 @@
     </div>
 
     <!-- JavaScript -->
-    <script src="src/main.js"></script>
+    <script type="module" src="src/main.js"></script>
 
 </body>
 </html>
