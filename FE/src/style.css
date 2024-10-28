@@ -46,7 +46,7 @@ h2 {
   border-radius: 8px;
 }
 
-#search-name, #search-province {
+#search-name, #search-province,#search-district,#search-commune {
   padding: 10px;
   width: 60%;
   border: 2px solid #ddd;
@@ -54,7 +54,7 @@ h2 {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-#search-name:hover, #search-province:hover {
+#search-name:hover, #search-province:hover, #search-district:hover, #search-commune:hover {
   border-color: #0073e6;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

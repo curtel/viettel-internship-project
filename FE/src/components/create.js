@@ -32,9 +32,9 @@ const create = (provinces) => {
         const provinceName = provinces.find(province => province.id === provinceId).name;
         const newCustomer = { id: Date.now(), name, phone, province: provinceName, addressDetails };
         
-        customers.push(newCustomer); // Add to customers list
-        renderTable(customers); // Refresh table
-        form.reset(); // Reset form fields
+        customers.push(newCustomer); // Thêm khách hàng mới
+        renderTable(customers); // Cập nhật bảng
+        form.reset(); // Xóa dữ liệu form
         addCustomerSection.style.display = 'none'; // Hide the form after adding
     });
 
