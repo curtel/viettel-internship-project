@@ -16,14 +16,14 @@
             <h2></h2>
             <input type="text" id="search-name" placeholder="Tìm kiếm theo tên">
             <select id="search-province">
-                <option value="">Chọn tỉnh</option>
+                <option value="">Chọn Tỉnh</option>
                 <!-- Options will be populated by JavaScript -->
             </select>
             <select id="search-district" required>
-                <option value="">Chọn huyện</option>
+                <option value="">Chọn Huyện</option>
             </select>
             <select id="search-commune" required>
-                <option value="">Chọn xã</option>
+                <option value="">Chọn Xã</option>
             </select>
         </div>
 
@@ -37,9 +37,14 @@
                 <input type="text" id="name" placeholder="Tên khách hàng" required>
                 <input type="text" id="phone" placeholder="Số điện thoại" required>
                 <select id="province" required>
-                    <option value="">Chọn tỉnh</option>
+                    <option value="">Chọn Tỉnh</option>
                 </select>
-                
+                <select id="district" required>
+                    <option value="">Chọn Huyện</option>
+                </select>
+                <select id="commune" required>
+                    <option value="">Chọn Xã</option>
+                </select>              
                 
                 <input type="text" id="addressDetails" placeholder="Địa chỉ chi tiết" required>
                 <button type="submit">Thêm vào danh sách</button>
@@ -54,6 +59,8 @@
                         <th>Tên khách hàng</th>
                         <th>Số điện thoại</th>
                         <th>Tỉnh</th>
+                        <th>Huyện</th>
+                        <th>Xã</th>
                         <th>Địa chỉ chi tiết</th>
                     </tr>
                 </thead>
