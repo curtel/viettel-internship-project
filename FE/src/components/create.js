@@ -1,18 +1,69 @@
 const create = (provinces, districts, communes) => {
-    
     const form = document.getElementById('customer-form');
     const tableBody = document.querySelector('#customer-table tbody');
-    const addCustomerSection = document.getElementById('add-customer');
     const addButton = document.getElementById('add-btn');
+    const modal = document.getElementById('customer-modal');
+    const closeModalButton = document.getElementById('close-modal');
+    const submitButton = document.getElementById('submit-button'); // Nút submit
 
-    const customers = [];
-
-    // Hiển thị hoặc ẩn form thêm khách hàng khi nhấn nút
+    // Hiển thị modal khi nhấn nút "Thêm Khách Hàng"
     addButton.addEventListener('click', () => {
-        addCustomerSection.style.display = addCustomerSection.style.display === 'none' ? 'block' : 'none';
+        modal.style.display = 'block';
+        submitButton.textContent = 'Thêm Khách Hàng'; // Đặt lại văn bản nút khi mở modal
     });
 
-    // Điền dữ liệu vào dropdown tỉnh
+    // Ẩn modal khi nhấn vào nút đóng
+    closeModalButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Đóng modal nếu nhấn vào bên ngoài nội dung modal
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Thêm dữ liệu khách hàng khi gửi form và ẩn modal
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        // Thu thập dữ liệu form và thêm khách hàng mới
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const provinceId = document.getElementById('province').value;
+        const districtId = document.getElementById('district').value;
+        const communeId = document.getElementById('commune').value;
+        const addressDetails = document.getElementById('addressDetails').value;
+
+        const provinceName = provinces.find(province => province.id === provinceId)?.name || '';
+        const districtName = districts.find(district => district.id === districtId)?.name || '';
+        const communeName = communes.find(commune => commune.id === communeId)?.name || '';
+
+        const newCustomer = {
+            id: Date.now(),
+            name,
+            phone,
+            province: provinceName,
+            district: districtName,
+            commune: communeName,
+            addressDetails
+        };
+
+        customers.push(newCustomer); // Thêm khách hàng mới
+        renderTable(customers);      // Cập nhật bảng
+        form.reset();                // Xóa dữ liệu trong form
+
+        modal.style.display = 'none'; // Ẩn modal sau khi gửi
+    });
+
+    // Đổi văn bản nút thành "Lưu" khi tất cả trường đều có giá trị
+    form.addEventListener('input', () => {
+        const isFormFilled = form.checkValidity();
+        submitButton.textContent = isFormFilled ? 'Lưu' : 'Thêm Khách Hàng';
+    });
+
+    // Điền dropdown tỉnh
     const provinceSelect = document.getElementById('province');
     provinces.forEach(province => {
         const option = document.createElement('option');
@@ -21,19 +72,14 @@ const create = (provinces, districts, communes) => {
         provinceSelect.appendChild(option);
     });
 
-    // Khi chọn tỉnh, điền lại danh sách huyện tương ứng
+    // Điền dropdown huyện khi chọn tỉnh
     const districtSelect = document.getElementById('district');
     const communeSelect = document.getElementById('commune');
-
     provinceSelect.addEventListener('change', () => {
         const selectedProvinceId = provinceSelect.value;
-        console.log("Selected Province ID:", selectedProvinceId);
-        
-        // Xóa các lựa chọn cũ trong dropdown huyện và xã
         districtSelect.innerHTML = '<option value="">Chọn Huyện</option>';
         communeSelect.innerHTML = '<option value="">Chọn Xã</option>';
 
-        // Thêm các lựa chọn huyện mới dựa trên tỉnh đã chọn
         districts.forEach(district => {
             if (district.provinceId === selectedProvinceId) {
                 const option = document.createElement('option');
@@ -44,15 +90,11 @@ const create = (provinces, districts, communes) => {
         });
     });
 
-    // Khi chọn huyện, điền lại danh sách xã tương ứng
+    // Điền dropdown xã khi chọn huyện
     districtSelect.addEventListener('change', () => {
         const selectedDistrictId = districtSelect.value;
-        console.log("Selected District ID:", selectedDistrictId);
-        
-        // Xóa các lựa chọn cũ trong dropdown xã
         communeSelect.innerHTML = '<option value="">Chọn Xã</option>';
 
-        // Thêm các lựa chọn xã mới dựa trên huyện đã chọn
         communes.forEach(commune => {
             if (commune.districtId === selectedDistrictId) {
                 const option = document.createElement('option');
@@ -63,41 +105,10 @@ const create = (provinces, districts, communes) => {
         });
     });
 
-    // Thêm khách hàng mới
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const name = document.getElementById('name').value;
-        const phone = document.getElementById('phone').value;
-        const provinceId = document.getElementById('province').value;
-        const districtId = document.getElementById('district').value;
-        const communeId = document.getElementById('commune').value;
-        const addressDetails = document.getElementById('addressDetails').value;
-
-        // Lấy tên tỉnh, huyện, xã từ id
-        const provinceName = provinces.find(province => province.id === provinceId).name || '';
-        const districtName = districts.find(district => district.id === districtId)?.name || '';
-        const communeName = communes.find(commune => commune.id === communeId)?.name || '';
-        
-        const newCustomer = {
-            id: Date.now(),
-            name,
-            phone,
-            province: provinceName,
-            district: districtName,
-            commune: communeName,
-            addressDetails
-        };
-        
-        customers.push(newCustomer); // Thêm khách hàng mới
-        renderTable(customers); // Cập nhật bảng
-        form.reset(); // Xóa dữ liệu form
-        addCustomerSection.style.display = 'none'; // Ẩn form sau khi thêm
-    });
-
-    // Hàm để hiển thị bảng khách hàng
-    function renderTable(filteredCustomers) {
+    // Hàm cập nhật bảng khách hàng
+    function renderTable(customers) {
         tableBody.innerHTML = '';
-        filteredCustomers.forEach((customer) => {
+        customers.forEach(customer => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${customer.name}</td>
@@ -112,5 +123,5 @@ const create = (provinces, districts, communes) => {
     }
 };
 
-// Export hàm create để sử dụng trong main.js
+// Xuất hàm create
 export default create;

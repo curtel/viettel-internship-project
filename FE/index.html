@@ -30,25 +30,41 @@
         <!-- Add Button -->
         <button id="add-btn">Thêm Khách Hàng</button>
 
-        <!-- Customer Form -->
-        <div id="add-customer" style="display: none;">
-            <h2>Thêm Khách Hàng Mới</h2>
-            <form id="customer-form">
-                <input type="text" id="name" placeholder="Tên khách hàng" required>
-                <input type="text" id="phone" placeholder="Số điện thoại" required>
-                <select id="province" required>
-                    <option value="">Chọn Tỉnh</option>
-                </select>
-                <select id="district" required>
-                    <option value="">Chọn Huyện</option>
-                </select>
-                <select id="commune" required>
-                    <option value="">Chọn Xã</option>
-                </select>              
-                
-                <input type="text" id="addressDetails" placeholder="Địa chỉ chi tiết" required>
-                <button type="submit">Thêm vào danh sách</button>
-            </form>
+        
+
+                <!-- Cấu trúc Modal -->
+        <div id="customer-modal" class="modal">
+            <div class="modal-content">
+                <span id="close-modal" class="close">&times;</span>
+                <h2>Thêm Khách Hàng</h2>
+                <form id="customer-form">
+                    <label for="name">Tên:</label>
+                    <input type="text" id="name" required>
+                    
+                    <label for="phone">Số điện thoại:</label>
+                    <input type="text" id="phone" required>
+                    
+                    <label for="province">Tỉnh/Thành phố:</label>
+                    <select id="province" required>
+                        <option value="">Chọn Tỉnh/Thành phố</option>
+                    </select>
+                    
+                    <label for="district">Quận/Huyện:</label>
+                    <select id="district">
+                        <option value="">Chọn Huyện</option>
+                    </select>
+                    
+                    <label for="commune">Xã/Phường:</label>
+                    <select id="commune">
+                        <option value="">Chọn Xã</option>
+                    </select>
+                    
+                    <label for="addressDetails">Địa chỉ chi tiết:</label>
+                    <input type="text" id="addressDetails">
+                    
+                    <button type="submit">Lưu</button>
+                </form>
+            </div>
         </div>
 
         <!-- Customer Table -->

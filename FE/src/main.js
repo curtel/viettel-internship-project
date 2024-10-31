@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         populateCommunes(selectedDistrict);
     });
 
+    // Hàm hiển thị bảng khách hàng
     function renderTable(filteredCustomers = customers) {
         tableBody.innerHTML = '';
         filteredCustomers.forEach((customer) => {
@@ -207,5 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     searchCommune.addEventListener('change', filterCustomers);
 
     renderTable();
+
+    
     create(provinces, districts, communes);
 });
