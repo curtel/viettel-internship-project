@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS tt;
-USE tt;
+CREATE DATABASE IF NOT EXISTS thuctap;
+USE thuctap;
 
 -- Tạo bảng Districts nếu chưa tồn tại
 CREATE TABLE IF NOT EXISTS Districts (
