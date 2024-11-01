@@ -1,5 +1,6 @@
 CREATE DATABASE IF NOT EXISTS tt;
 USE tt;
+
 -- Tạo bảng Districts nếu chưa tồn tại
 CREATE TABLE IF NOT EXISTS Districts (
     DistrictID INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Providers (
 -- Thêm dữ liệu mẫu vào bảng Providers
 INSERT INTO Providers (ProviderName)
 VALUES ('Viettel'), ('VinaPhone'), ('FPT'), ('MobiFone')
-ON DUPLICATE KEY UPDATE ProviderID = LAST_INSERT_ID(ProviderID);
+ON DUPLICATE KEY UPDATE ProviderName = VALUES(ProviderName);
 
 -- Tạo bảng Users nếu chưa tồn tại
 CREATE TABLE IF NOT EXISTS Users (
@@ -42,12 +43,13 @@ CREATE TABLE IF NOT EXISTS Users (
     FOREIGN KEY (DistrictID) REFERENCES Districts(DistrictID)
 );
 
--- Thêm dữ liệu mẫu vào bảng Districts 
+-- Thêm dữ liệu mẫu vào bảng Districts
+INSERT INTO Districts (DistrictName)
 VALUES ('Thành phố Kon Tum'), ('Huyện Đăk Hà'), ('Huyện Đăk Tô'), ('Huyện Ngọc Hồi'), ('Huyện Đăk Glei'),
        ('Huyện Sa Thầy'), ('Huyện Tu Mơ Rông'), ('Huyện Kon Rẫy'), ('Huyện Kon Plông'), ('Huyện Ia H\'Drai')
-ON DUPLICATE KEY UPDATE DistrictID = LAST_INSERT_ID(DistrictID);
+ON DUPLICATE KEY UPDATE DistrictName = VALUES(DistrictName);
 
--- Thêm dữ liệu mẫu vào bảng Communes 
+-- Thêm dữ liệu mẫu vào bảng Communes
 INSERT INTO Communes (CommuneName, DistrictID)
 VALUES ('Xã A', 1), ('Đăk Blà', 1), ('Đăk Cấm', 1), ('Đăk Rơ Wa', 1), ('Đoàn Kết', 1),
        ('Chư Hreng', 1), ('Kroong', 1), ('Ngọk Bay', 1), ('Đăk Năng', 1), ('Đăk Mar', 2),
@@ -65,7 +67,7 @@ VALUES ('Xã A', 1), ('Đăk Blà', 1), ('Đăk Cấm', 1), ('Đăk Rơ Wa', 1),
        ('Đăk Tơ Lung', 8), ('Đăk Ruồng', 8), ('Tân Lập', 8), ('Kon Pne', 8), ('Măng Cành', 9),
        ('Đăk Tăng', 9), ('Ngok Tem', 9), ('Pờ Ê', 9), ('Măng Bút', 9), ('Đăk Ring', 9),
        ('Hiếu', 9), ('Ia Đal', 10), ('Ia Dom', 10), ('Ia Tơi', 10)
-ON DUPLICATE KEY UPDATE CommuneID = LAST_INSERT_ID(CommuneID);
+ON DUPLICATE KEY UPDATE CommuneName = VALUES(CommuneName);
 
 -- Thêm index cho bảng Communes và Users nếu chưa tồn tại
 ALTER TABLE Communes ADD INDEX (DistrictID);
