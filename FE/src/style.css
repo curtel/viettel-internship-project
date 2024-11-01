@@ -113,7 +113,7 @@ label {
 /* Số điện thoại, tỉnh, huyện, xã */
 input[type="text"],
 select {
-  width: 100%; /* Chiều rộng tối đa */
+  width: 90%; /* Chiều rộng tối đa */
   padding: 10px; /* Padding cho các input */
   border: 2px solid #ddd;
   border-radius: 4px;
