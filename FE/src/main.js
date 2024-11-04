@@ -2,29 +2,32 @@ import create from './components/create.js';
 
 // Dữ liệu các tỉnh/thành phố
 const provinces = [
-    { id: 'HCM', name: 'TP Hồ Chí Minh' },
-    { id: 'HN', name: 'Hà Nội' },
-    { id: 'DN', name: 'Đà Nẵng' },
-    { id: 'BD', name: 'Bình Dương' },
-    { id: 'VT', name: 'Vũng Tàu' },
+    { id: 'KT', name: 'Kon Tum' },
+
 ];
 
 // Dữ liệu các quận/huyện
 const districts = [
-    { id: 'HCM1', provinceId: 'HCM', name: 'Quận 1' },
-    { id: 'HN1', provinceId: 'HN', name: 'Quận Ba Đình' },
-    { id: 'DN1', provinceId: 'DN', name: 'Quận Hải Châu' },
-    { id: 'BD1', provinceId: 'BD', name: 'Thị xã Bến Cát' },
-    { id: 'VT1', provinceId: 'VT', name: 'Thành phố Vũng Tàu' },
+    { id: 'KT1', provinceId: 'KT', name: 'Thành phố Kon Tum' },
+    { id: 'KT2', provinceId: 'KT', name: 'Huyện Đăk Hà' },
+    { id: 'KT3', provinceId: 'KT', name: 'Huyện Đăk Tô' },
+    
 ];
 
 // Dữ liệu các xã/phường
 const communes = [
-    { id: 'HCM1-1', districtId: 'HCM1', name: 'Phường Bến Nghé' },
-    { id: 'HN1-1', districtId: 'HN1', name: 'Phường Điện Biên' },
-    { id: 'DN1-1', districtId: 'DN1', name: 'Phường Thạch Thang' },
-    { id: 'BD1-1', districtId: 'BD1', name: 'Phường Mỹ Phước' },
-    { id: 'VT1-1', districtId: 'VT1', name: 'Phường 1' },
+    { id: 'KT1-1', districtId: 'KT1', name: 'Xã Đăk Blà' },
+    { id: 'KT2-1', districtId: 'KT2', name: 'Xã Đăk Hring' },
+    { id: 'KT3-1', districtId: 'KT3', name: 'Xã Kon Đào' },
+    
+];
+
+// Dữ liệu các nhà cung cấp
+const providers = [
+    { id: 'V', name: 'Viettel' },
+    { id: 'VP', name: 'VinaPhone' },
+    { id: 'FPT', name: 'FPT' },
+    { id: 'MF', name: 'MobiFone' },
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -34,16 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchProvince = document.getElementById('search-province');
     const searchDistrict = document.getElementById('search-district');
     const searchCommune = document.getElementById('search-commune');
+    const searchProvider = document.getElementById('search-provider');
     const form = document.getElementById('customer-form');
 
     // Mảng mẫu dữ liệu khách hàng
     const customers = [
-        { id: 1, name: 'Nguyễn Văn A', phone: '0901234567', province: 'TP Hồ Chí Minh', district: 'Quận 1', commune: 'Phường Bến Nghé', addressDetails: '123 Đường ABC' },
-        { id: 2, name: 'Trần Thị B', phone: '0912345678', province: 'Hà Nội', addressDetails: '456 Đường DEF' },
-        { id: 3, name: 'Lê Văn C', phone: '0923456789', province: 'Đà Nẵng', addressDetails: '789 Đường GHI' },
-        { id: 4, name: 'Phạm Thị D', phone: '0934567890', province: 'Bình Dương', addressDetails: '321 Đường JKL' },
-        { id: 5, name: 'Đặng Văn E', phone: '0945678901', province: 'Vũng Tàu', addressDetails: '654 Đường MNO' },
+        { id: 1, name: 'Nguyễn Văn A', phone: '0901234567', province: 'Kon Tum', district: 'Thành phố Kon Tum', commune: 'Xã Đăk Blà', addressDetails: '1 Đường A', provider: 'Viettel' },
+        { id: 2, name: 'Trần Thị B', phone: '0912345678', province: 'Kon Tum', district: 'Huyện Đăk Hà', commune: 'Xã Đăk Hring', addressDetails: '2 Đường B', provider: 'VinaPhone' },
+        { id: 3, name: 'Lê Văn C', phone: '0923456789', province: 'Kon Tum', district: 'Huyện Đăk Tô', commune: 'Xã Kon Đào', addressDetails: '3 Đường C', provider: 'FPT' },
+        
     ];
+    
 
     // Thêm danh sách tỉnh vào dropdown Tìm kiếm
     provinces.forEach(province => {
@@ -77,8 +81,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Thêm danh sách nhà cung cấp vào dropdown Tìm kiếm
+    providers.forEach(provider => {
+        const option = document.createElement('option');
+        option.value = provider.id;
+        option.textContent = provider.name;
+        searchProvider.appendChild(option);
+    });
+
      // Lắng nghe sự kiện khi chọn tỉnh
-     searchProvince.addEventListener('change', (event) => {
+    searchProvince.addEventListener('change', (event) => {
         const selectedProvince = event.target.value;
         populateDistricts(selectedProvince);
         searchCommune.innerHTML = '<option value="">Chọn xã</option>'; // Đặt lại các tùy chọn của danh sách xã
@@ -88,6 +100,11 @@ document.addEventListener('DOMContentLoaded', () => {
     searchDistrict.addEventListener('change', (event) => {
         const selectedDistrict = event.target.value;
         populateCommunes(selectedDistrict);
+    });
+
+    searchProvider.addEventListener('change', (event) => {
+        const selectedProvider = event.target.value;
+        populateCommunes(selectedProvider);
     });
 
     // Hàm hiển thị bảng khách hàng
@@ -102,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${customer.district}</td>
                 <td>${customer.commune}</td>
                 <td>${customer.addressDetails}</td>
+                <td>${customer.provider}</td>
                 <td> 
                     <button class="edit-btn" data-id="${customer.id}">Sửa</button>
                     <button class="delete-btn" data-id="${customer.id}">Xóa</button>
@@ -118,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    //Hàm sửa
     function handleEdit(event) {
         const customerId = event.target.getAttribute('data-id');
         const customer = customers.find(cust => cust.id == customerId);
@@ -128,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('province').value = provinces.find(province => province.name === customer.province).id;
             document.getElementById('district').value = districts.find(district => district.name === customer.district).id;
             document.getElementById('commune').value = communes.find(commune => commune.name === customer.commune).id;
+            document.getElementById('provider').value = providers.find(provider => provider.name === customer.provider).id;
             document.getElementById('addressDetails').value = customer.addressDetails;
 
             document.getElementById('add-customer').style.display = 'block';
@@ -140,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 customer.province = provinces.find(province => province.id === document.getElementById('province').value).name;
                 customer.district = districts.find(district => district.id === document.getElementById('district').value).name;
                 customer.commune = communes.find(commune => commune.id === document.getElementById('commune').value).name;
+                customer.provider = providers.find(provider => provider.id === document.getElementById('provider').value).name;
                 customer.addressDetails = document.getElementById('addressDetails').value;
 
                 renderTable(customers);
@@ -152,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //Hàm xóa
     function handleDelete(event) {
         const customerId = event.target.getAttribute('data-id');
         const index = customers.findIndex(cust => cust.id == customerId);
@@ -164,18 +186,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addCustomer(event) {
         event.preventDefault();
+        if (!validateForm()) {
+            return; // Nếu không hợp lệ, dừng lại
+        }
         const name = document.getElementById('name').value;
         const phone = document.getElementById('phone').value;
         const provinceId = document.getElementById('province').value;
         const districtId = document.getElementById('district').value;
         const communeId = document.getElementById('commune').value;
+        const providerId = document.getElementById('provider').value;
         const addressDetails = document.getElementById('addressDetails').value;
 
         const provinceName = provinces.find(province => province.id === provinceId).name;
         const districtName = districts.find(district => district.id === districtId).name;
         const communeName = communes.find(commune => commune.id === communeId).name;
+        const providerName = providers.find(provider => provider.id === providerId).name;
         
-        const newCustomer = { id: Date.now(), name, phone, province: provinceName, district: districtName, commune: communeName, addressDetails };
+        const newCustomer = { id: Date.now(), name, phone, province: provinceName, district: districtName, commune: communeName, addressDetails, provider: providerName };
 
         customers.push(newCustomer);
         renderTable(customers);
@@ -185,18 +212,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', addCustomer);
 
+    function validateForm() {
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const provinceId = document.getElementById('province').value;
+        const districtId = document.getElementById('district').value;
+        const communeId = document.getElementById('commune').value;
+        const addressDetails = document.getElementById('addressDetails').value;
+        const providerId = document.getElementById('provider').value;
+    
+        // Kiểm tra các trường khác
+        if (!name || !phone || !provinceId || !districtId || !communeId || !addressDetails || !providerId) {
+            alert("Bạn cần nhập đầy đủ thông tin");
+            return false; // Nếu không hợp lệ
+        }
+        
+        return true; // Nếu tất cả các trường hợp lệ
+    }
+
     function filterCustomers() {
         const searchName = searchInput.value.toLowerCase();
         const selectedProvince = searchProvince.value;
         const selectedDistrict = searchDistrict.value;
         const selectedCommune = searchCommune.value;
+        const selectedProvider = searchProvider.value;
 
         const filteredCustomers = customers.filter(customer => {
             const matchesName = customer.name.toLowerCase().includes(searchName);
             const matchesProvince = selectedProvince ? customer.province === provinces.find(p => p.id === selectedProvince).name : true;
             const matchesDistrict = selectedDistrict ? customer.district === districts.find(p => p.id === selectedDistrict).name : true;
             const matchesCommune = selectedCommune ? customer.commune === communes.find(p => p.id === selectedCommune).name : true;
-            return matchesName && matchesProvince && matchesDistrict && matchesCommune;
+            const matchesProvider = selectedProvider ? customer.provider === providers.find(p => p.id === selectedProvider).name : true;
+            return matchesName && matchesProvince && matchesDistrict && matchesCommune && matchesProvider;
         });
 
         renderTable(filteredCustomers);
@@ -206,9 +253,10 @@ document.addEventListener('DOMContentLoaded', () => {
     searchProvince.addEventListener('change', filterCustomers);
     searchDistrict.addEventListener('change', filterCustomers);
     searchCommune.addEventListener('change', filterCustomers);
+    searchProvider.addEventListener('change', filterCustomers);
 
     renderTable();
 
     
-    create(provinces, districts, communes);
+    create(provinces, districts, communes, providers);
 });

@@ -1,4 +1,4 @@
-const create = (provinces, districts, communes) => {
+const create = (provinces, districts, communes, providers) => {
     const form = document.getElementById('customer-form');
     const tableBody = document.querySelector('#customer-table tbody');
     const addButton = document.getElementById('add-btn');
@@ -34,11 +34,13 @@ const create = (provinces, districts, communes) => {
         const provinceId = document.getElementById('province').value;
         const districtId = document.getElementById('district').value;
         const communeId = document.getElementById('commune').value;
+        const providerId = document.getElementById('provider').value;
         const addressDetails = document.getElementById('addressDetails').value;
 
         const provinceName = provinces.find(province => province.id === provinceId)?.name || '';
         const districtName = districts.find(district => district.id === districtId)?.name || '';
         const communeName = communes.find(commune => commune.id === communeId)?.name || '';
+        const providerName = providers.find(provider => provider.id === providerId)?.name || '';
 
         const newCustomer = {
             id: Date.now(),
@@ -47,6 +49,7 @@ const create = (provinces, districts, communes) => {
             province: provinceName,
             district: districtName,
             commune: communeName,
+            provider: providerName,
             addressDetails
         };
 
@@ -104,6 +107,14 @@ const create = (provinces, districts, communes) => {
             }
         });
     });
+    // Điền dropdown nhà cung cấp
+    const providerSelect = document.getElementById('provider');
+    providers.forEach(provider => {
+        const option = document.createElement('option');
+        option.value = provider.id;
+        option.textContent = provider.name;
+        providerSelect.appendChild(option);
+    });
 
     // Hàm cập nhật bảng khách hàng
     function renderTable(customers) {
@@ -117,6 +128,7 @@ const create = (provinces, districts, communes) => {
                 <td>${customer.district}</td>
                 <td>${customer.commune}</td>
                 <td>${customer.addressDetails}</td>
+                <td>${customer.provider}</td>
             `;
             tableBody.appendChild(row);
         });

@@ -11,13 +11,10 @@
         <h1>Tìm Kiếm Khách Hàng</h1>
         <script src="src/main.js"></script>
 
-        <!-- Search Section -->
         <div id="search-section">
-            <h2></h2>
             <input type="text" id="search-name" placeholder="Tìm kiếm theo tên">
             <select id="search-province">
                 <option value="">Chọn Tỉnh</option>
-                <!-- Options will be populated by JavaScript -->
             </select>
             <select id="search-district" required>
                 <option value="">Chọn Huyện</option>
@@ -25,49 +22,52 @@
             <select id="search-commune" required>
                 <option value="">Chọn Xã</option>
             </select>
+            <select id="search-provider" required>
+                <option value="">Chọn Nhà cung cấp</option>
+            </select>
         </div>
 
-        <!-- Add Button -->
         <button id="add-btn">Thêm Khách Hàng</button>
 
-        
-
-                <!-- Cấu trúc Modal -->
         <div id="customer-modal" class="modal">
             <div class="modal-content">
                 <span id="close-modal" class="close">&times;</span>
                 <h2>Thêm Khách Hàng</h2>
                 <form id="customer-form">
                     <label for="name">Tên:</label>
-                    <input type="text" id="name" required>
+                    <input type="text" id="name" >
                     
                     <label for="phone">Số điện thoại:</label>
-                    <input type="text" id="phone" required>
+                    <input type="text" id="phone" >
                     
-                    <label for="province">Tỉnh/Thành phố:</label>
-                    <select id="province" required>
-                        <option value="">Chọn Tỉnh/Thành phố</option>
+                    <label for="province">Tỉnh:</label>
+                    <select id="province" >
+                        <option value="">Chọn Tỉnh</option>
                     </select>
                     
-                    <label for="district">Quận/Huyện:</label>
+                    <label for="district">Huyện:</label>
                     <select id="district">
                         <option value="">Chọn Huyện</option>
                     </select>
                     
-                    <label for="commune">Xã/Phường:</label>
+                    <label for="commune">Xã:</label>
                     <select id="commune">
                         <option value="">Chọn Xã</option>
                     </select>
                     
                     <label for="addressDetails">Địa chỉ chi tiết:</label>
                     <input type="text" id="addressDetails">
+
+                    <label for="provider">Nhà cung cấp:</label>
+                    <select id="provider">
+                        <option value="">Chọn Nhà cung cấp</option>
+                    </select> 
                     
                     <button type="submit">Lưu</button>
                 </form>
             </div>
         </div>
 
-        <!-- Customer Table -->
         <div id="customer-dashboard">
             <table id="customer-table">
                 <thead>
@@ -78,16 +78,15 @@
                         <th>Huyện</th>
                         <th>Xã</th>
                         <th>Địa chỉ chi tiết</th>
+                        <th>Nhà cung cấp</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Customer rows will be populated by JavaScript -->
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- JavaScript -->
     <script type="module" src="src/main.js"></script>
 
 </body>
