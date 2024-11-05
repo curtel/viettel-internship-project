@@ -48,12 +48,13 @@ public class MainApp {
                         String phoneNumber = scanner.nextLine(); // Read PhoneNumber
                         System.out.print("Nhập Address: ");
                         String address = scanner.nextLine(); // Read Address
+                        System.out.print("Nhập DistrictID: ");
+                        Long districtID = scanner.nextLong(); // Read DistrictID
                         System.out.print("Nhập CommuneID: ");
                         Long communeID = scanner.nextLong(); // Read CommuneID
                         System.out.print("Nhập ProviderID: ");
                         Long providerID = scanner.nextLong(); // Read ProviderID
-                        System.out.print("Nhập DistrictID: ");
-                        Long districtID = scanner.nextLong(); // Read DistrictID
+                        
         
         // Call the insert method
                         userService.insertData(userName, phoneNumber, address, communeID, providerID, districtID);
@@ -63,18 +64,20 @@ public class MainApp {
                     // Cập nhật dữ liệu người dùng
                     System.out.print("Nhập UserID cần cập nhật: ");
                     int userID = scanner.nextInt();
+                    scanner.nextLine();
                     System.out.print("Nhập UserName mới: ");
-                    userName = scanner.next();
+                    userName = scanner.nextLine();
                     System.out.print("Nhập PhoneNumber mới: ");
                     phoneNumber = scanner.nextLine();
                     System.out.print("Nhập Address mới: ");
                     address = scanner.nextLine();
+                    System.out.print("Nhập DistrictID mới: ");
+                    districtID = scanner.nextLong();
                     System.out.print("Nhập CommuneID mới: ");
                     communeID = scanner.nextLong();
                     System.out.print("Nhập ProviderID mới: ");
                     providerID = scanner.nextLong();
-                    System.out.print("Nhập DistrictID mới: ");
-                    districtID = scanner.nextLong();
+                    
 
                     userService.updateData(userID, userName, phoneNumber, address, communeID, providerID, districtID);
                     break;
