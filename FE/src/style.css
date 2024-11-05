@@ -1,0 +1,107 @@
+/* Cài đặt chung */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url('https://src/img/website.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+}
+
+#app {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9); /* Tạo nền mờ */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+#app:hover {
+  transform: scale(1.02); /* Tăng nhẹ kích thước khi di chuột */
+}
+
+/* Kiểu chữ tiêu đề */
+h1 {
+  text-align: center;
+  color: #0073e6;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+/* Khu vực tìm kiếm */
+#search-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 10px;
+  background: rgba(0, 115, 230, 0.1);
+  border-radius: 8px;
+}
+
+#search-name, #search-province {
+  padding: 10px;
+  width: 60%;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#search-name:hover, #search-province:hover {
+  border-color: #0073e6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Bảng khách hàng */
+#customer-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#customer-table th, #customer-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+#customer-table th {
+  background-color: #0073e6;
+  color: #fff;
+  position: sticky;
+  top: 0;
+}
+
+#customer-table tr {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#customer-table tr:hover {
+  background-color: rgba(0, 115, 230, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 115, 230, 0.15);
+  transform: scale(1.01); /* Zoom nhẹ */
+}
+
+/* Hiệu ứng nút gọi hành động */
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #14487c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  background-color: #005bb5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
