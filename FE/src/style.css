@@ -136,14 +136,80 @@ button:hover {
   background-color: #005bb5;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-
+/* Cài đặt modal sửa (chỉnh kích thước và kiểu cho khung sửa) */
 #edit-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
-  border: 1px solid #ccc;
+  background-color: #fefefe; /* Same background color as the table rows */
+border: 1px solid #ddd; /* Border similar to the table */
   padding: 20px;
-  z-index: 1000; /* Để hiển thị ở trên cùng */
+  z-index: 1000;
+  width: 200%; /* Width adjustment to match the "Thêm Khách Hàng" form */
+  max-width: 65%; /* Maximum width for smaller screens */
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  overflow-y: auto; 
+  max-height: 80vh; 
+}
+
+
+/* General form styling */
+#customer-form,
+#edit-customer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%; /* Ensure both forms use full width */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  text-align: left;
+}
+input[type="text"],
+select {
+  width: 90%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+input[type="text"]:focus,
+select:focus {
+  border-color: #0073e6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #14487c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  background-color: #005bb5; /* Button hover effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Thêm khoảng cách dưới nút "Thêm Khách Hàng" */
+button#add-customer-button {
+  margin-bottom: 15px;
+}
+
+#customer-table {
+  margin-top: 15px; 
 }

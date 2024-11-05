@@ -3,7 +3,7 @@ const create = (provinces, districts, communes, providers) => {
     const tableBody = document.querySelector('#customer-table tbody');
     const addButton = document.getElementById('add-btn');
     const modal = document.getElementById('customer-modal');
-    const closeModalButton = document.getElementById('close-modal');
+    const closeModalButton = document.getElementById('close-modalC');
     const submitButton = document.getElementById('submit-button'); // Nút submit
 
     // Hiển thị modal khi nhấn nút "Thêm Khách Hàng"

@@ -136,25 +136,106 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Hàm sửa
-    function handleEdit(event) {
-        const customerId = event.target.getAttribute('data-id');
-        const customer = customers.find(cust => cust.id == customerId);
+    // Lắng nghe sự kiện khi chọn tỉnh trong modal
+document.getElementById('edit-province').addEventListener('change', (event) => {
+    const selectedProvince = event.target.value;
+    populateDistrictsForEdit(selectedProvince);
+    document.getElementById('edit-commune').innerHTML = '<option value="">Chọn xã</option>'; // Reset danh sách xã
+});
+
+// Lắng nghe sự kiện khi chọn huyện trong modal
+document.getElementById('edit-district').addEventListener('change', (event) => {
+    const selectedDistrict = event.target.value;
+    populateCommunesForEdit(selectedDistrict);
+});
+
+// Hàm cập nhật danh sách huyện dựa trên tỉnh đã chọn cho modal
+function populateDistrictsForEdit(selectedProvince) {
+    const provinceId = provinces.find(province => province.name === selectedProvince).id;
+    const editDistrictDropdown = document.getElementById('edit-district');
+    editDistrictDropdown.innerHTML = '<option value="">Chọn huyện</option>'; // Reset danh sách huyện
+    const filteredDistricts = districts.filter(district => district.provinceId === provinceId);
+    filteredDistricts.forEach(district => {
+        const option = document.createElement('option');
+        option.value = district.id;
+        option.textContent = district.name;
+        editDistrictDropdown.appendChild(option);
+    });
+}
+
+// Hàm cập nhật danh sách xã dựa trên huyện đã chọn cho modal
+function populateCommunesForEdit(selectedDistrict) {
+    const districtId = districts.find(district => district.id === selectedDistrict).id; // Sửa dòng này
+    const editCommuneDropdown = document.getElementById('edit-commune');
+    editCommuneDropdown.innerHTML = '<option value="">Chọn xã</option>'; // Reset danh sách xã
+    const filteredCommunes = communes.filter(commune => commune.districtId === districtId);
+    filteredCommunes.forEach(commune => {
+        const option = document.createElement('option');
+        option.value = commune.id;
+        option.textContent = commune.name;
+        editCommuneDropdown.appendChild(option);
+    });
+}
+
+// Hàm sửa
+function handleEdit(event) {
+    const customerId = event.target.getAttribute('data-id');
+    const customer = customers.find(cust => cust.id == customerId);
     
-        if (customer) {
-            // Điền dữ liệu vào modal
-            document.getElementById('edit-name').value = customer.name;
-            document.getElementById('edit-phone').value = customer.phone;
-            document.getElementById('edit-province').value = provinces.find(province => province.name === customer.province).id;
-            document.getElementById('edit-district').value = districts.find(district => district.name === customer.district).id;
-            document.getElementById('edit-commune').value = communes.find(commune => commune.name === customer.commune).id;
-            document.getElementById('edit-provider').value = providers.find(provider => provider.name === customer.provider).id;
-            document.getElementById('edit-addressDetails').value = customer.addressDetails;
-    
-            // Hiện modal
-            document.getElementById('edit-modal').style.display = 'block';
-        }
+    if (customer) {
+        // Điền dữ liệu vào modal
+        document.getElementById('edit-name').value = customer.name;
+        document.getElementById('edit-phone').value = customer.phone;
+
+        document.getElementById('edit-customer-form').dataset.id = customerId;
+
+
+        // Cập nhật dropdown tỉnh
+        document.getElementById('edit-province').innerHTML = '<option value="">Chọn tỉnh</option>'; // Reset dropdown
+        provinces.forEach(province => {
+            const option = document.createElement('option');
+            option.value = province.id;
+            option.textContent = province.name;
+            if (province.name === customer.province) {
+                option.selected = true; // Chọn tỉnh hiện tại
+            }
+            document.getElementById('edit-province').appendChild(option);
+        });
+
+        // Cập nhật dropdown huyện dựa trên tỉnh đã chọn
+        populateDistrictsForEdit(customer.province);
+
+        // Cập nhật dropdown xã dựa trên huyện đã chọn
+        const selectedDistrict = districts.find(district => district.name === customer.district).id; // Sửa dòng này
+        populateCommunesForEdit(selectedDistrict);
+
+        // Cập nhật dropdown nhà cung cấp
+        document.getElementById('edit-provider').innerHTML = '<option value="">Chọn nhà cung cấp</option>'; // Reset dropdown
+        providers.forEach(provider => {
+            const option = document.createElement('option');
+            option.value = provider.id;
+            option.textContent = provider.name;
+            if (provider.name === customer.provider) {
+                option.selected = true; // Chọn nhà cung cấp hiện tại
+            }
+            document.getElementById('edit-provider').appendChild(option);
+        });
+
+        document.getElementById('edit-addressDetails').value = customer.addressDetails;
+
+        // Hiện modal
+        document.getElementById('edit-modal').style.display = 'block';
     }
+    
+}
+
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', handleEdit);
+        });
+
+        // Gọi renderTable để hiển thị bảng khách hàng ban đầu
+        renderTable(customers);
+   
     
     // Cập nhật biểu mẫu chỉnh sửa
     document.getElementById('edit-customer-form').addEventListener('submit', function updateCustomer(event) {
@@ -172,17 +253,25 @@ document.addEventListener('DOMContentLoaded', () => {
             customer.addressDetails = document.getElementById('edit-addressDetails').value;
     
             renderTable(customers);
-            document.getElementById('edit-modal').style.display = 'none'; // Đóng modal
+            document.getElementById('edit-modal').style.display = 'none';
+            document.getElementById('close-modal').addEventListener('click', () => {
+                const editModal = document.getElementById('edit-modal');
+                editModal.style.display = 'none'; 
+            });
         }
     });
-    
+    const modal = document.getElementById('edit-modal');
 
-    // Thêm sự kiện cho nút đóng modal
-    document.getElementById('close-modal').addEventListener('click', () => {
-        document.getElementById('edit-modal').style.display = 'none';
+    const closeModalButton1 = document.getElementById('close-modal');{
+        closeModalButton1.addEventListener('click', () => {
+            modal.style.display='none';
+        })
+    }
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
     });
-    
-
     //Hàm xóa
     function handleDelete(event) {
         const customerId = event.target.getAttribute('data-id');

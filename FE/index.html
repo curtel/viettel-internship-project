@@ -31,7 +31,7 @@
 
         <div id="customer-modal" class="modal">
             <div class="modal-content">
-                <span id="close-modal" class="close">&times;</span>
+                <span id="close-modalC" class="close">&times;</span>
                 <h2>Thêm Khách Hàng</h2>
                 <form id="customer-form">
                     <label for="name">Tên:</label>
@@ -69,8 +69,10 @@
         </div>
 
         <div id="edit-modal" style="display:none;">
+            <span id="close-modal" class="close">&times;</span>
+
             <h2>Sửa</h2>
-            <form id="edit-customer-form">
+            <form id="edit-customer-form" data-id="">
                 <label for="edit-name">Tên:</label>
                 <input type="text" id="edit-name">
         
@@ -94,10 +96,9 @@
         
                 <button type="submit">Cập nhật</button>
                 
-                <button type="button" id="close-modal">Đóng</button>
+                
             </form>
-        </div>
-        
+        </div>        
         
 
         <div id="customer-dashboard">
