@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Website</a> &gt; <a href="index.source.html" class="el_package">com.example.model</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package com.example.model;
+
+
+import javax.persistence.GenerationType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+
+@Entity
+<span class="nc" id="L11">public class User {</span>
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long ID;
+    
+    @Column(nullable = false, length = 50)
+    private String name;
+
+    @Column(nullable = false, unique = true, length = 15) // Độ dài tối đa cho số điện thoại
+    private String phone;
+
+    @Column(nullable = false, length = 255) // Độ dài tối đa cho địa chỉ
+    private String address;
+
+    @Column(name = &quot;commune_id&quot;) // Tên cột trong cơ sở dữ liệu
+    private Long communeID;
+
+    @Column(name = &quot;provider_id&quot;) // Tên cột trong cơ sở dữ liệu
+    private Long providerID;
+
+    @Column(name = &quot;district_id&quot;) // Tên cột trong cơ sở dữ liệu
+    private Long districtID;
+
+    public Long getId() {
+<span class="nc" id="L35">        return ID;</span>
+    }
+
+    public void setId(Long ID) {
+<span class="nc" id="L39">        this.ID = ID;</span>
+<span class="nc" id="L40">    }</span>
+
+    public String getName() {
+<span class="nc" id="L43">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="nc" id="L47">        this.name = name;</span>
+<span class="nc" id="L48">    }</span>
+
+    public String getPhone() {
+<span class="nc" id="L51">        return phone;</span>
+    }
+
+    public void setPhone(String phone) {
+<span class="nc" id="L55">        this.phone = phone;</span>
+<span class="nc" id="L56">    }</span>
+
+    public String getAddress() {
+<span class="nc" id="L59">        return address;</span>
+    }
+
+    public void setAddress(String address) {
+<span class="nc" id="L63">        this.address = address;</span>
+<span class="nc" id="L64">    }</span>
+
+    public Long getCommuneID() {
+<span class="nc" id="L67">        return communeID;</span>
+    }
+
+    public void setCommuneID(Long communeID) {
+<span class="nc" id="L71">        this.communeID = communeID;</span>
+<span class="nc" id="L72">    }</span>
+
+    public Long getProviderID() {
+<span class="nc" id="L75">        return providerID;</span>
+    }
+
+    public void setProviderID(Long providerID) {
+<span class="nc" id="L79">        this.providerID = providerID;</span>
+<span class="nc" id="L80">    }</span>
+
+    public Long getDistrictID() {
+<span class="nc" id="L83">        return districtID;</span>
+    }
+
+    public void setDistrictID(Long districtID) {
+<span class="nc" id="L87">        this.districtID = districtID;</span>
+<span class="nc" id="L88">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
