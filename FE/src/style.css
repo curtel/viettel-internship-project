@@ -136,3 +136,14 @@ button:hover {
   background-color: #005bb5;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
+#edit-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  z-index: 1000; /* Để hiển thị ở trên cùng */
+}

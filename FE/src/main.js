@@ -136,42 +136,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    //Hàm sửa
+    // Hàm sửa
     function handleEdit(event) {
         const customerId = event.target.getAttribute('data-id');
         const customer = customers.find(cust => cust.id == customerId);
-
+    
         if (customer) {
-            document.getElementById('name').value = customer.name;
-            document.getElementById('phone').value = customer.phone;
-            document.getElementById('province').value = provinces.find(province => province.name === customer.province).id;
-            document.getElementById('district').value = districts.find(district => district.name === customer.district).id;
-            document.getElementById('commune').value = communes.find(commune => commune.name === customer.commune).id;
-            document.getElementById('provider').value = providers.find(provider => provider.name === customer.provider).id;
-            document.getElementById('addressDetails').value = customer.addressDetails;
-
-            document.getElementById('add-customer').style.display = 'block';
-
-            form.removeEventListener('submit', addCustomer);
-            form.addEventListener('submit', function updateCustomer(event) {
-                event.preventDefault();
-                customer.name = document.getElementById('name').value;
-                customer.phone = document.getElementById('phone').value;
-                customer.province = provinces.find(province => province.id === document.getElementById('province').value).name;
-                customer.district = districts.find(district => district.id === document.getElementById('district').value).name;
-                customer.commune = communes.find(commune => commune.id === document.getElementById('commune').value).name;
-                customer.provider = providers.find(provider => provider.id === document.getElementById('provider').value).name;
-                customer.addressDetails = document.getElementById('addressDetails').value;
-
-                renderTable(customers);
-                form.reset();
-                document.getElementById('add-customer').style.display = 'none';
-
-                form.removeEventListener('submit', updateCustomer);
-                form.addEventListener('submit', addCustomer);
-            });
+            // Điền dữ liệu vào modal
+            document.getElementById('edit-name').value = customer.name;
+            document.getElementById('edit-phone').value = customer.phone;
+            document.getElementById('edit-province').value = provinces.find(province => province.name === customer.province).id;
+            document.getElementById('edit-district').value = districts.find(district => district.name === customer.district).id;
+            document.getElementById('edit-commune').value = communes.find(commune => commune.name === customer.commune).id;
+            document.getElementById('edit-provider').value = providers.find(provider => provider.name === customer.provider).id;
+            document.getElementById('edit-addressDetails').value = customer.addressDetails;
+    
+            // Hiện modal
+            document.getElementById('edit-modal').style.display = 'block';
         }
     }
+    
+    // Cập nhật biểu mẫu chỉnh sửa
+    document.getElementById('edit-customer-form').addEventListener('submit', function updateCustomer(event) {
+        event.preventDefault();
+        const customerId = event.target.dataset.id; // Lưu id của khách hàng
+        const customer = customers.find(cust => cust.id == customerId);
+        
+        if (customer) {
+            customer.name = document.getElementById('edit-name').value;
+            customer.phone = document.getElementById('edit-phone').value;
+            customer.province = provinces.find(province => province.id === document.getElementById('edit-province').value).name;
+            customer.district = districts.find(district => district.id === document.getElementById('edit-district').value).name;
+            customer.commune = communes.find(commune => commune.id === document.getElementById('edit-commune').value).name;
+            customer.provider = providers.find(provider => provider.id === document.getElementById('edit-provider').value).name;
+            customer.addressDetails = document.getElementById('edit-addressDetails').value;
+    
+            renderTable(customers);
+            document.getElementById('edit-modal').style.display = 'none'; // Đóng modal
+        }
+    });
+    
+
+    // Thêm sự kiện cho nút đóng modal
+    document.getElementById('close-modal').addEventListener('click', () => {
+        document.getElementById('edit-modal').style.display = 'none';
+    });
+    
 
     //Hàm xóa
     function handleDelete(event) {
@@ -221,13 +231,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const addressDetails = document.getElementById('addressDetails').value;
         const providerId = document.getElementById('provider').value;
     
-        // Kiểm tra các trường khác
         if (!name || !phone || !provinceId || !districtId || !communeId || !addressDetails || !providerId) {
             alert("Bạn cần nhập đầy đủ thông tin");
-            return false; // Nếu không hợp lệ
+            return false; 
         }
         
-        return true; // Nếu tất cả các trường hợp lệ
+        return true;
     }
 
     function filterCustomers() {

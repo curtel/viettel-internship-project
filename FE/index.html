@@ -68,6 +68,38 @@
             </div>
         </div>
 
+        <div id="edit-modal" style="display:none;">
+            <h2>Sửa</h2>
+            <form id="edit-customer-form">
+                <label for="edit-name">Tên:</label>
+                <input type="text" id="edit-name">
+        
+                <label for="edit-phone">Số điện thoại:</label>
+                <input type="text" id="edit-phone">
+        
+                <label for="edit-province">Tỉnh/Thành phố:</label>
+                <select id="edit-province"></select>
+        
+                <label for="edit-district">Huyện:</label>
+                <select id="edit-district"></select>
+        
+                <label for="edit-commune">Xã:</label>
+                <select id="edit-commune"></select>
+        
+                <label for="edit-addressDetails">Địa chỉ chi tiết:</label>
+                <input type="text" id="edit-addressDetails">
+        
+                <label for="edit-provider">Nhà cung cấp:</label>
+                <select id="edit-provider"></select>
+        
+                <button type="submit">Cập nhật</button>
+                
+                <button type="button" id="close-modal">Đóng</button>
+            </form>
+        </div>
+        
+        
+
         <div id="customer-dashboard">
             <table id="customer-table">
                 <thead>
