@@ -8,6 +8,7 @@ body {
   color: #333;
 }
 
+/* Modal (cửa sổ bật lên) */
 .modal {
   display: none;
   position: fixed;
@@ -24,7 +25,8 @@ body {
   background-color: #fefefe;
   margin: 15% auto;
   padding: 20px;
-  border: 1px solid #888;
+  border-radius: 8px; /* Cạnh tròn */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Tạo bóng */
   width: 80%;
   max-width: 600px;
 }
@@ -41,7 +43,7 @@ body {
   max-width: 900px;
   margin: 30px auto;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.9); /* Tạo nền mờ */
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
@@ -77,75 +79,15 @@ h2 {
 
 #search-name, #search-province, #search-district, #search-commune {
   padding: 10px;
-  width: auto; /* Đặt chiều rộng tự động */
-  flex: 1; /* Cho phép các trường sử dụng không gian còn lại */
-  min-width: 120px; /* Đặt chiều rộng tối thiểu cho các trường */
+  width: 60%;
   border: 2px solid #ddd;
   border-radius: 4px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-#search-name:hover, #search-province:hover, #search-district:hover, #search-commune:hover {
+#search-name:focus, #search-province:focus, #search-district:focus, #search-commune:focus {
   border-color: #0073e6;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Cấu trúc Modal */
-.modal-content {
-  display: flex;
-  flex-direction: column; /* Để các phần tử nằm theo chiều dọc */
-}
-
-/* Định dạng cho form khách hàng */
-#customer-form {
-  display: flex;
-  flex-direction: column; /* Để các phần tử nằm theo chiều dọc */
-}
-
-.form-group {
-  margin-bottom: 15px; /* Khoảng cách giữa các nhóm */
-}
-
-label {
-  margin-bottom: 5px;
-}
-
-/* Số điện thoại, tỉnh, huyện, xã */
-input[type="text"],
-select {
-  width: 90%; /* Chiều rộng tối đa */
-  padding: 10px; /* Padding cho các input */
-  border: 2px solid #ddd;
-  border-radius: 4px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-input[type="text"]:hover,
-select:hover {
-  border-color: #0073e6;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Hiệu ứng nút gọi hành động */
-button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: #fff;
-  background-color: #14487c;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-button:hover {
-  background-color: #005bb5;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Thêm khoảng cách dưới nút "Thêm Khách Hàng" */
-button#add-customer-button {
-  margin-bottom: 15px; /* Điều chỉnh khoảng cách theo nhu cầu */
 }
 
 /* Bảng khách hàng */
@@ -175,14 +117,99 @@ button#add-customer-button {
 #customer-table tr:hover {
   background-color: rgba(0, 115, 230, 0.1);
   box-shadow: 0 4px 8px rgba(0, 115, 230, 0.15);
-  transform: scale(1.01); /* Zoom nhẹ */
-}
-/* Thêm khoảng cách dưới nút "Thêm Khách Hàng" */
-button#add-customer-button {
-  margin-bottom: 15px; /* Điều chỉnh khoảng cách theo nhu cầu */
+  transform: scale(1.01);
 }
 
-/* Hoặc thêm khoảng cách trên tiêu đề bảng */
+/* Hiệu ứng nút */
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #14487c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  background-color: #005bb5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+/* Cài đặt modal sửa (chỉnh kích thước và kiểu cho khung sửa) */
+#edit-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe; /* Same background color as the table rows */
+border: 1px solid #ddd; /* Border similar to the table */
+  padding: 20px;
+  z-index: 1000;
+  width: 200%; /* Width adjustment to match the "Thêm Khách Hàng" form */
+  max-width: 65%; /* Maximum width for smaller screens */
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  overflow-y: auto; 
+  max-height: 80vh; 
+}
+
+
+/* General form styling */
+#customer-form,
+#edit-customer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%; /* Ensure both forms use full width */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  text-align: left;
+}
+input[type="text"],
+select {
+  width: 90%;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+input[type="text"]:focus,
+select:focus {
+  border-color: #0073e6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #14487c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  background-color: #005bb5; /* Button hover effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Thêm khoảng cách dưới nút "Thêm Khách Hàng" */
+button#add-customer-button {
+  margin-bottom: 15px;
+}
+
 #customer-table {
-  margin-top: 15px; /* Điều chỉnh khoảng cách theo nhu cầu */
+  margin-top: 15px; 
 }
