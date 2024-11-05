@@ -139,7 +139,7 @@ button:hover {
 /* Cài đặt modal sửa (chỉnh kích thước và kiểu cho khung sửa) */
 #edit-modal {
   position: fixed;
-  top: 50%;
+  top: 60%; /* Điều chỉnh để di chuyển xuống dưới */
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fefefe; 
@@ -156,7 +156,7 @@ button:hover {
 }
 
 
-/* General form styling */
+
 #customer-form,
 #edit-customer-form {
   display: flex;
