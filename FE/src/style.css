@@ -142,16 +142,17 @@ button:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fefefe; /* Same background color as the table rows */
-border: 1px solid #ddd; /* Border similar to the table */
+  background-color: #fefefe; 
+  border: 1px solid #ddd;
   padding: 20px;
   z-index: 1000;
-  width: 200%; /* Width adjustment to match the "Thêm Khách Hàng" form */
-  max-width: 65%; /* Maximum width for smaller screens */
+  width: 90%; /* Thay đổi width thành 90% */
+  max-width: 600px; /* Thiết lập chiều rộng tối đa */
   border-radius: 8px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
   overflow-y: auto; 
-  max-height: 80vh; 
+  max-height: 80vh; /* Giới hạn chiều cao tối đa */
+  height: auto; /* Để chiều cao tự động điều chỉnh */
 }
 
 
@@ -161,7 +162,7 @@ border: 1px solid #ddd; /* Border similar to the table */
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 100%; /* Ensure both forms use full width */
+  width: 100%; 
 }
 
 .form-group {
