@@ -24,9 +24,7 @@ public class UserService implements UserRepository {
     }
 
     @Override
-    public List<String> findByDistrict(Long districtID, Long communeID) {
-        List<String> results = new ArrayList<>();
+    public void findByDistrict(Long districtID, Long communeID) {
         MySQLConnection.findByDistric(districtID, communeID);
-        return results;
     }
 }

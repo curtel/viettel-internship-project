@@ -55,6 +55,15 @@ public class MySQLConnection {
     public static void updateData(int UserID, String UserName, String PhoneNumber, String Address, Long CommuneID, Long ProviderID, Long DistrictID) {
         String sql = "UPDATE Users SET UserName = ?, PhoneNumber = ?, Address = ?, CommuneID = ?, ProviderID = ?, DistrictID = ? WHERE UserID = ?";
     
+        if (UserID <= 0) {
+            System.out.println("UserID không hợp lệ: " + UserID);
+            return;
+        }
+        if (UserName == null || PhoneNumber == null || Address == null) {
+            System.out.println("Các thông tin cần thiết không được để trống.");
+            return;
+        }
+
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             
