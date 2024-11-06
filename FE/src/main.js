@@ -179,10 +179,12 @@ function populateCommunesForEdit(selectedDistrict) {
 
 // Hàm sửa
 function handleEdit(event) {
+    
     const customerId = event.target.getAttribute('data-id');
     const customer = customers.find(cust => cust.id == customerId);
     
     if (customer) {
+        
         // Điền dữ liệu vào modal
         document.getElementById('edit-name').value = customer.name;
         document.getElementById('edit-phone').value = customer.phone;
@@ -242,6 +244,9 @@ function handleEdit(event) {
         event.preventDefault();
         const customerId = event.target.dataset.id; // Lưu id của khách hàng
         const customer = customers.find(cust => cust.id == customerId);
+        if (!validateForm_edit()) {
+            return; // Dừng lại nếu form không hợp lệ
+        }
         
         if (customer) {
             customer.name = document.getElementById('edit-name').value;
@@ -272,6 +277,7 @@ function handleEdit(event) {
             modal.style.display = 'none';
         }
     });
+
     //Hàm xóa
     function handleDelete(event) {
         const customerId = event.target.getAttribute('data-id');
@@ -288,6 +294,7 @@ function handleEdit(event) {
         if (!validateForm()) {
             return; // Nếu không hợp lệ, dừng lại
         }
+        
         const name = document.getElementById('name').value;
         const phone = document.getElementById('phone').value;
         const provinceId = document.getElementById('province').value;
@@ -328,6 +335,24 @@ function handleEdit(event) {
         return true;
     }
 
+    function validateForm_edit() {
+        const name = document.getElementById('edit-name').value;
+        const phone = document.getElementById('edit-phone').value;
+        const provinceId = document.getElementById('edit-province').value;
+        const districtId = document.getElementById('edit-district').value;
+        const communeId = document.getElementById('edit-commune').value;
+        const addressDetails = document.getElementById('edit-addressDetails').value;
+        const providerId = document.getElementById('edit-provider').value;
+    
+        if (!name || !phone || !provinceId || !districtId || !communeId || !addressDetails || !providerId) {
+            alert("Bạn cần nhập đầy đủ thông tin");
+            return false; 
+        }
+        
+        return true;
+    }
+
+    
     function filterCustomers() {
         const searchName = searchInput.value.toLowerCase();
         const selectedProvince = searchProvince.value;
