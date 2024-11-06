@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MainApp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Website</a> &gt; <a href="index.source.html" class="el_package">com.example</a> &gt; <span class="el_source">MainApp.java</span></div><h1>MainApp.java</h1><pre class="source lang-java linenums">package com.example;
+
+import com.example.service.UserService;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+<span class="nc" id="L9">public class MainApp {</span>
+    public static void main(String[] args) {
+
+<span class="nc" id="L12">        Connection conn = MySQLConnection.getConnection();</span>
+
+        // If the connection is successful, you can call other methods
+<span class="nc bnc" id="L15" title="All 2 branches missed.">        if (conn != null) {</span>
+            
+            // Make sure to close the connection after you are done
+            try {
+<span class="nc" id="L19">                conn.close();</span>
+<span class="nc" id="L20">            } catch (SQLException e) {</span>
+<span class="nc" id="L21">                e.printStackTrace();</span>
+<span class="nc" id="L22">            }</span>
+        } else {
+<span class="nc" id="L24">            System.out.println(&quot;Unable to connect to the database.&quot;);</span>
+        }
+
+<span class="nc" id="L27">        Scanner scanner = new Scanner(System.in);</span>
+<span class="nc" id="L28">        UserService userService = new UserService();</span>
+
+        while (true) {
+<span class="nc" id="L31">            System.out.println(&quot;\nChọn thao tác bạn muốn thực hiện:&quot;);</span>
+<span class="nc" id="L32">            System.out.println(&quot;1. Thêm người dùng&quot;);</span>
+<span class="nc" id="L33">            System.out.println(&quot;2. Cập nhật người dùng&quot;);</span>
+<span class="nc" id="L34">            System.out.println(&quot;3. Xóa người dùng&quot;);</span>
+<span class="nc" id="L35">            System.out.println(&quot;4. Tìm kiếm theo quận&quot;);</span>
+<span class="nc" id="L36">            System.out.println(&quot;5. Thoát&quot;);</span>
+            
+<span class="nc" id="L38">            System.out.print(&quot;\nNhập lệnh: &quot;);</span>
+<span class="nc" id="L39">            int choice = scanner.nextInt();</span>
+<span class="nc" id="L40">            scanner.nextLine();</span>
+
+<span class="nc bnc" id="L42" title="All 6 branches missed.">            switch (choice) {</span>
+                case 1:
+                    // Lấy dữ liệu từ người dùng và thêm dữ liệu vào cơ sở dữ liệu
+<span class="nc" id="L45">                        System.out.print(&quot;Nhập UserName: &quot;);</span>
+<span class="nc" id="L46">                        String userName = scanner.nextLine(); // Read UserName</span>
+<span class="nc" id="L47">                        System.out.print(&quot;Nhập PhoneNumber: &quot;);</span>
+<span class="nc" id="L48">                        String phoneNumber = scanner.nextLine(); // Read PhoneNumber</span>
+<span class="nc" id="L49">                        System.out.print(&quot;Nhập Address: &quot;);</span>
+<span class="nc" id="L50">                        String address = scanner.nextLine(); // Read Address</span>
+<span class="nc" id="L51">                        System.out.print(&quot;Nhập DistrictID: &quot;);</span>
+<span class="nc" id="L52">                        Long districtID = scanner.nextLong(); // Read DistrictID</span>
+<span class="nc" id="L53">                        System.out.print(&quot;Nhập CommuneID: &quot;);</span>
+<span class="nc" id="L54">                        Long communeID = scanner.nextLong(); // Read CommuneID</span>
+<span class="nc" id="L55">                        System.out.print(&quot;Nhập ProviderID: &quot;);</span>
+<span class="nc" id="L56">                        Long providerID = scanner.nextLong(); // Read ProviderID</span>
+                        
+        
+        // Call the insert method
+<span class="nc" id="L60">                        userService.insertData(userName, phoneNumber, address, communeID, providerID, districtID);</span>
+<span class="nc" id="L61">                        break;</span>
+
+                case 2:
+                    // Cập nhật dữ liệu người dùng
+<span class="nc" id="L65">                    System.out.print(&quot;Nhập UserID cần cập nhật: &quot;);</span>
+<span class="nc" id="L66">                    int userID = scanner.nextInt();</span>
+<span class="nc" id="L67">                    scanner.nextLine();</span>
+<span class="nc" id="L68">                    System.out.print(&quot;Nhập UserName mới: &quot;);</span>
+<span class="nc" id="L69">                    userName = scanner.nextLine();</span>
+<span class="nc" id="L70">                    System.out.print(&quot;Nhập PhoneNumber mới: &quot;);</span>
+<span class="nc" id="L71">                    phoneNumber = scanner.nextLine();</span>
+<span class="nc" id="L72">                    System.out.print(&quot;Nhập Address mới: &quot;);</span>
+<span class="nc" id="L73">                    address = scanner.nextLine();</span>
+<span class="nc" id="L74">                    System.out.print(&quot;Nhập DistrictID mới: &quot;);</span>
+<span class="nc" id="L75">                    districtID = scanner.nextLong();</span>
+<span class="nc" id="L76">                    System.out.print(&quot;Nhập CommuneID mới: &quot;);</span>
+<span class="nc" id="L77">                    communeID = scanner.nextLong();</span>
+<span class="nc" id="L78">                    System.out.print(&quot;Nhập ProviderID mới: &quot;);</span>
+<span class="nc" id="L79">                    providerID = scanner.nextLong();</span>
+                    
+
+<span class="nc" id="L82">                    userService.updateData(userID, userName, phoneNumber, address, communeID, providerID, districtID);</span>
+<span class="nc" id="L83">                    break;</span>
+
+                case 3:
+                    // Xóa người dùng
+<span class="nc" id="L87">                    System.out.print(&quot;Nhập UserID cần xóa: &quot;);</span>
+<span class="nc" id="L88">                    userID = scanner.nextInt();</span>
+<span class="nc" id="L89">                    userService.deleteData(userID);</span>
+<span class="nc" id="L90">                    break;</span>
+
+                case 4:
+                    // Tìm kiếm người dùng theo quận và xã
+<span class="nc" id="L94">                    System.out.print(&quot;Nhập DistrictID để tìm kiếm: &quot;);</span>
+<span class="nc" id="L95">                    districtID = scanner.nextLong();</span>
+<span class="nc" id="L96">                    System.out.print(&quot;Nhập CommuneID (hoặc nhập -1 nếu không muốn lọc theo CommuneID): &quot;);</span>
+<span class="nc" id="L97">                    communeID = scanner.nextLong();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                    if (communeID == -1) {</span>
+<span class="nc" id="L99">                        communeID = null;</span>
+                    }
+<span class="nc" id="L101">                    userService.findByDistrict(districtID, communeID);</span>
+<span class="nc" id="L102">                    break;</span>
+
+                case 5:
+<span class="nc" id="L105">                    System.out.println(&quot;Thoát chương trình.&quot;);</span>
+<span class="nc" id="L106">                    scanner.close();</span>
+<span class="nc" id="L107">                    System.exit(0);</span>
+
+                default:
+<span class="nc" id="L110">                    System.out.println(&quot;Lựa chọn không hợp lệ.&quot;);</span>
+                    break;
+            }
+<span class="nc" id="L113">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

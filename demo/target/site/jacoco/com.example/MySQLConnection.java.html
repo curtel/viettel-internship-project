@@ -2,41 +2,154 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-<span class="nc" id="L7">public class MySQLConnection {</span>
+<span class="nc" id="L9">public class MySQLConnection {</span>
     private static final String URL = &quot;jdbc:mysql://localhost:3306/tt&quot;;
     private static final String USER = &quot;root&quot;;
     private static final String PASSWORD = &quot;cong1234&quot;;
 
     public static Connection getConnection() {
-<span class="nc" id="L13">        Connection connection = null;</span>
+<span class="nc" id="L15">        Connection connection = null;</span>
         try {
             // Tải driver MySQL
-<span class="nc" id="L16">            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</span>
+<span class="nc" id="L18">            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</span>
             // Tạo kết nối
-<span class="nc" id="L18">            connection = DriverManager.getConnection(URL, USER, PASSWORD);</span>
-<span class="nc" id="L19">            System.out.println(&quot;Kết nối thành công!&quot;);</span>
-<span class="nc" id="L20">        } catch (ClassNotFoundException e) {</span>
-<span class="nc" id="L21">            System.out.println(&quot;Driver không tìm thấy: &quot; + e.getMessage());</span>
-<span class="nc" id="L22">        } catch (SQLException e) {</span>
-<span class="nc" id="L23">            System.out.println(&quot;Lỗi kết nối: &quot; + e.getMessage());</span>
-<span class="nc" id="L24">        }</span>
-<span class="nc" id="L25">        return connection;</span>
+<span class="nc" id="L20">            connection = DriverManager.getConnection(URL, USER, PASSWORD);</span>
+<span class="nc" id="L21">            System.out.println(&quot;Kết nối thành công!&quot;);</span>
+<span class="nc" id="L22">        } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L23">            System.out.println(&quot;Driver không tìm thấy: &quot; + e.getMessage());</span>
+<span class="nc" id="L24">        } catch (SQLException e) {</span>
+<span class="nc" id="L25">            System.out.println(&quot;Lỗi kết nối: &quot; + e.getMessage());</span>
+<span class="nc" id="L26">        }</span>
+<span class="nc" id="L27">        return connection;</span>
     }
 
+    public static void insertData(String UserName, String PhoneNumber, String Address, Long CommuneID, Long ProviderID, Long DistrictID) {
+<span class="nc" id="L31">        String sql = &quot;INSERT INTO Users (UserName, PhoneNumber, Address, CommuneID, ProviderID, DistrictID) VALUES (?, ?, ?, ?, ?, ?)&quot;;</span>
+    
+<span class="nc" id="L33">        try (Connection connection = getConnection();</span>
+<span class="nc" id="L34">             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {</span>
+            
+            // Thiết lập giá trị cho các tham số, bỏ qua UserID vì nó tự động tăng
+<span class="nc" id="L37">            preparedStatement.setString(1, UserName);</span>
+<span class="nc" id="L38">            preparedStatement.setString(2, PhoneNumber);</span>
+<span class="nc" id="L39">            preparedStatement.setString(3, Address);</span>
+<span class="nc" id="L40">            preparedStatement.setObject(4, CommuneID);</span>
+<span class="nc" id="L41">            preparedStatement.setObject(5, ProviderID);</span>
+<span class="nc" id="L42">            preparedStatement.setObject(6, DistrictID);</span>
+            
+            // Thực thi câu lệnh
+<span class="nc" id="L45">            int rowsInserted = preparedStatement.executeUpdate();</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            if (rowsInserted &gt; 0) {</span>
+<span class="nc" id="L47">                System.out.println(&quot;Thêm dữ liệu thành công!&quot;);</span>
+            }
+<span class="nc" id="L49">        } catch (SQLException e) {</span>
+<span class="nc" id="L50">            System.out.println(&quot;Lỗi khi kết nối hoặc thêm dữ liệu: &quot; + e.getMessage());</span>
+<span class="nc" id="L51">            e.printStackTrace();</span>
+<span class="nc" id="L52">        }</span>
+<span class="nc" id="L53">    }</span>
+
+    public static void updateData(int UserID, String UserName, String PhoneNumber, String Address, Long CommuneID, Long ProviderID, Long DistrictID) {
+<span class="nc" id="L56">        String sql = &quot;UPDATE Users SET UserName = ?, PhoneNumber = ?, Address = ?, CommuneID = ?, ProviderID = ?, DistrictID = ? WHERE UserID = ?&quot;;</span>
+    
+<span class="nc" id="L58">        try (Connection connection = getConnection();</span>
+<span class="nc" id="L59">             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {</span>
+            
+            // Thiết lập giá trị mới cho các cột
+<span class="nc" id="L62">            preparedStatement.setString(1, UserName);</span>
+<span class="nc" id="L63">            preparedStatement.setString(2, PhoneNumber);</span>
+<span class="nc" id="L64">            preparedStatement.setString(3, Address);</span>
+<span class="nc" id="L65">            preparedStatement.setObject(4, CommuneID);</span>
+<span class="nc" id="L66">            preparedStatement.setObject(5, ProviderID);</span>
+<span class="nc" id="L67">            preparedStatement.setObject(6, DistrictID);</span>
+<span class="nc" id="L68">            preparedStatement.setInt(7, UserID); // UserID xác định hàng cần cập nhật</span>
+            
+            // Thực thi câu lệnh
+<span class="nc" id="L71">            int rowsUpdated = preparedStatement.executeUpdate();</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            if (rowsUpdated &gt; 0) {</span>
+<span class="nc" id="L73">                System.out.println(&quot;Cập nhật dữ liệu thành công!&quot;);</span>
+            } else {
+<span class="nc" id="L75">                System.out.println(&quot;Không tìm thấy bản ghi nào với ID = &quot; + UserID);</span>
+            }
+<span class="nc" id="L77">        } catch (SQLException e) {</span>
+<span class="nc" id="L78">            System.out.println(&quot;Lỗi khi kết nối hoặc cập nhật dữ liệu: &quot; + e.getMessage());</span>
+<span class="nc" id="L79">            e.printStackTrace();</span>
+<span class="nc" id="L80">        }</span>
+<span class="nc" id="L81">    }</span>
+
+    public static void deleteData(int UserID) {
+<span class="nc" id="L84">        String sql = &quot;DELETE FROM Users WHERE UserID = ?&quot;;</span>
+    
+<span class="nc" id="L86">        try (Connection connection = getConnection();</span>
+<span class="nc" id="L87">             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {</span>
+            
+            
+<span class="nc" id="L90">            preparedStatement.setInt(1, UserID); // UserID xác định hàng cần cập nhật</span>
+            
+            // Thực thi câu lệnh
+<span class="nc" id="L93">            int rowsDeleted = preparedStatement.executeUpdate();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (rowsDeleted &gt; 0) {</span>
+<span class="nc" id="L95">            System.out.println(&quot;Xóa dữ liệu thành công!&quot;);</span>
+        } else {
+<span class="nc" id="L97">            System.out.println(&quot;Không tìm thấy bản ghi nào với UserID = &quot; + UserID);</span>
+        }
+<span class="nc" id="L99">    } catch (SQLException e) {</span>
+<span class="nc" id="L100">        System.out.println(&quot;Lỗi khi kết nối hoặc xóa dữ liệu: &quot; + e.getMessage());</span>
+<span class="nc" id="L101">        e.printStackTrace();</span>
+<span class="nc" id="L102">    }</span>
+<span class="nc" id="L103">    }</span>
+
+    public static void findByDistric(Long DistrictID, Long CommuneID){
+<span class="nc" id="L106">        String sql = &quot;SELECT * FROM Users WHERE DistrictID = ?&quot;;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        if (CommuneID != null){</span>
+<span class="nc" id="L108">            sql += &quot; AND CommuneID = ?&quot;;</span>
+        }
+
+<span class="nc" id="L111">        try (Connection connection = getConnection();</span>
+<span class="nc" id="L112">            PreparedStatement preparedStatement = connection.prepareStatement(sql)){</span>
+<span class="nc" id="L113">                preparedStatement.setLong(1, DistrictID);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">                if (CommuneID != null){</span>
+<span class="nc" id="L115">                    preparedStatement.setLong(2, CommuneID);</span>
+                }
+
+<span class="nc" id="L118">            try (ResultSet resultSet = preparedStatement.executeQuery()) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">            while (resultSet.next()) {</span>
+                // Giả sử bảng Users có các cột tương ứng với User model
+<span class="nc" id="L121">                int userID = resultSet.getInt(&quot;UserID&quot;);</span>
+<span class="nc" id="L122">                String userName = resultSet.getString(&quot;UserName&quot;);</span>
+<span class="nc" id="L123">                String phoneNumber = resultSet.getString(&quot;PhoneNumber&quot;);</span>
+<span class="nc" id="L124">                String address = resultSet.getString(&quot;Address&quot;);</span>
+<span class="nc" id="L125">                Long communeID = resultSet.getLong(&quot;CommuneID&quot;);</span>
+<span class="nc" id="L126">                Long providerID = resultSet.getLong(&quot;ProviderID&quot;);</span>
+<span class="nc" id="L127">                Long districtID = resultSet.getLong(&quot;DistrictID&quot;);</span>
+
+<span class="nc" id="L129">                System.out.println(&quot;UserID: &quot; + userID + &quot;, UserName: &quot; + userName + </span>
+                                   &quot;, PhoneNumber: &quot; + phoneNumber + &quot;, Address: &quot; + address +
+                                   &quot;, CommuneID: &quot; + communeID + &quot;, ProviderID: &quot; + providerID +
+                                   &quot;, DistrictID: &quot; + districtID);
+<span class="nc" id="L133">                }</span>
+            }
+<span class="nc" id="L135">    }catch (SQLException e) {</span>
+<span class="nc" id="L136">        System.out.println(&quot;Lỗi khi kết nối hoặc tìm kiếm dữ liệu: &quot; + e.getMessage());</span>
+<span class="nc" id="L137">        e.printStackTrace();</span>
+<span class="nc" id="L138">    }</span>
+<span class="nc" id="L139">}</span>
+
     public static void main(String[] args) {
-<span class="nc" id="L29">        Connection conn = getConnection();</span>
+<span class="nc" id="L142">        Connection conn = getConnection();</span>
         // Thực hiện các thao tác với cơ sở dữ liệu ở đây
         // ...
         
         try {
-<span class="nc bnc" id="L34" title="All 2 branches missed.">            if (conn != null) {</span>
-<span class="nc" id="L35">                conn.close(); // Đảm bảo đóng kết nối sau khi sử dụng</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">            if (conn != null) {</span>
+<span class="nc" id="L148">                conn.close(); // Đảm bảo đóng kết nối sau khi sử dụng</span>
             }
-<span class="nc" id="L37">        } catch (SQLException e) {</span>
-<span class="nc" id="L38">            e.printStackTrace();</span>
-<span class="nc" id="L39">        }</span>
-<span class="nc" id="L40">    }</span>
+<span class="nc" id="L150">        } catch (SQLException e) {</span>
+<span class="nc" id="L151">            e.printStackTrace();</span>
+<span class="nc" id="L152">        }</span>
+<span class="nc" id="L153">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

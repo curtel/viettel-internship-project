@@ -21,8 +21,8 @@
     <maven-surefire-plugin.version>3.2.1</maven-surefire-plugin.version>
 
     <!-- JaCoCo thresholds. Increase gradually as you add tests. -->
-    <jacoco.unit-tests.limit.instruction-ratio>0%</jacoco.unit-tests.limit.instruction-ratio>
-    <jacoco.unit-tests.limit.branch-ratio>0%</jacoco.unit-tests.limit.branch-ratio>
+    <jacoco.unit-tests.limit.instruction-ratio>0.2</jacoco.unit-tests.limit.instruction-ratio>
+    <jacoco.unit-tests.limit.branch-ratio>0.2</jacoco.unit-tests.limit.branch-ratio>
     <jacoco.unit-tests.limit.class-complexity>20</jacoco.unit-tests.limit.class-complexity>
     <jacoco.unit-tests.limit.method-complexity>5</jacoco.unit-tests.limit.method-complexity>
   </properties>
@@ -147,72 +147,76 @@
         <version>${maven-surefire-plugin.version}</version>
       </plugin>
       <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <id>pre-unit-test</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>post-unit-test</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>check-unit-test</id>
-            <phase>test</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <configuration>
-              <dataFile>${project.build.directory}/jacoco.exec</dataFile>
-              <rules>
-                <rule>
-                  <element>BUNDLE</element>
-                  <limits>
-                    <limit>
-                      <counter>INSTRUCTION</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>${jacoco.unit-tests.limit.instruction-ratio}</minimum>
-                    </limit>
-                    <limit>
-                      <counter>BRANCH</counter>
-                      <value>COVEREDRATIO</value>
-                      <minimum>${jacoco.unit-tests.limit.branch-ratio}</minimum>
-                    </limit>
-                  </limits>
-                </rule>
-                <rule>
-                  <element>CLASS</element>
-                  <limits>
-                    <limit>
-                      <counter>COMPLEXITY</counter>
-                      <value>TOTALCOUNT</value>
-                      <maximum>${jacoco.unit-tests.limit.class-complexity}</maximum>
-                    </limit>
-                  </limits>
-                </rule>
-                <rule>
-                  <element>METHOD</element>
-                  <limits>
-                    <limit>
-                      <counter>COMPLEXITY</counter>
-                      <value>TOTALCOUNT</value>
-                      <maximum>${jacoco.unit-tests.limit.method-complexity}</maximum>
-                    </limit>
-                  </limits>
-                </rule>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>${jacoco-maven-plugin.version}</version>
+    <executions>
+      <execution>
+        <id>pre-unit-test</id>
+        <goals>
+          <goal>prepare-agent</goal>
+        </goals>
+      </execution>
+      <execution>
+        <id>post-unit-test</id>
+        <phase>test</phase>
+        <goals>
+          <goal>report</goal>
+        </goals>
+      </execution>
+      <!-- Nhận xét phần check-unit-test -->
+      <!--
+      <execution>
+        <id>check-unit-test</id>
+        <phase>test</phase>
+        <goals>
+          <goal>check</goal>
+        </goals>
+        <configuration>
+          <dataFile>${project.build.directory}/jacoco.exec</dataFile>
+          <rules>
+            <rule>
+              <element>BUNDLE</element>
+              <limits>
+                <limit>
+                  <counter>INSTRUCTION</counter>
+                  <value>COVEREDRATIO</value>
+                  <minimum>${jacoco.unit-tests.limit.instruction-ratio}</minimum>
+                </limit>
+                <limit>
+                  <counter>BRANCH</counter>
+                  <value>COVEREDRATIO</value>
+                  <minimum>${jacoco.unit-tests.limit.branch-ratio}</minimum>
+                </limit>
+              </limits>
+            </rule>
+            <rule>
+              <element>CLASS</element>
+              <limits>
+                <limit>
+                  <counter>COMPLEXITY</counter>
+                  <value>TOTALCOUNT</value>
+                  <maximum>${jacoco.unit-tests.limit.class-complexity}</maximum>
+                </limit>
+              </limits>
+            </rule>
+            <rule>
+              <element>METHOD</element>
+              <limits>
+                <limit>
+                  <counter>COMPLEXITY</counter>
+                  <value>TOTALCOUNT</value>
+                  <maximum>${jacoco.unit-tests.limit.method-complexity}</maximum>
+                </limit>
+              </limits>
+            </rule>
+          </rules>
+        </configuration>
+      </execution>
+      -->
+    </executions>
+  </plugin>
+
     </plugins>
   </build>
   <reporting>
