@@ -49,10 +49,6 @@ body {
   transition: transform 0.3s ease;
 }
 
-#app:hover {
-  transform: scale(1.02); /* Tăng nhẹ kích thước khi di chuột */
-}
-
 /* Kiểu chữ tiêu đề */
 h1 {
   text-align: center;
@@ -120,42 +116,27 @@ h2 {
   transform: scale(1.01);
 }
 
-/* Hiệu ứng nút */
-button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: #fff;
-  background-color: #14487c;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
 button:hover {
   background-color: #005bb5;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-/* Cài đặt modal sửa (chỉnh kích thước và kiểu cho khung sửa) */
+
 #edit-modal {
-  position: fixed;
-  top: 60%; /* Điều chỉnh để di chuyển xuống dưới */
+  position: absolute;
+  top: 150px; /* Tăng khoảng cách từ trên xuống dưới để khung sửa thấp hơn */
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fefefe; 
+  transform: translateX(-50%);
+  background-color: #fefefe;
   border: 1px solid #ddd;
   padding: 20px;
   z-index: 1000;
-  width: 90%; /* Thay đổi width thành 90% */
-  max-width: 600px; /* Thiết lập chiều rộng tối đa */
-  border-radius: 8px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-  overflow-y: auto; 
-  max-height: 80vh; /* Giới hạn chiều cao tối đa */
+  width: 90%; /* Giữ chiều rộng ở mức 90% */
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   height: auto; /* Để chiều cao tự động điều chỉnh */
+  overflow: visible; /* Bỏ cuộn nội dung bên trong khung sửa */
 }
-
-
 
 #customer-form,
 #edit-customer-form {
@@ -176,6 +157,7 @@ label {
   font-weight: bold;
   text-align: left;
 }
+
 input[type="text"],
 select {
   width: 90%;
@@ -184,6 +166,7 @@ select {
   border-radius: 4px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 input[type="text"]:focus,
 select:focus {
   border-color: #0073e6;
