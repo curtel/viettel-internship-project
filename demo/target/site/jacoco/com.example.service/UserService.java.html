@@ -24,10 +24,8 @@ import java.util.List;
 <span class="nc" id="L24">    }</span>
 
     @Override
-    public List&lt;String&gt; findByDistrict(Long districtID, Long communeID) {
-<span class="nc" id="L28">        List&lt;String&gt; results = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L29">        MySQLConnection.findByDistric(districtID, communeID);</span>
-<span class="nc" id="L30">        return results;</span>
-    }
+    public void findByDistrict(Long districtID, Long communeID) {
+<span class="nc" id="L28">        MySQLConnection.findByDistric(districtID, communeID);</span>
+<span class="nc" id="L29">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

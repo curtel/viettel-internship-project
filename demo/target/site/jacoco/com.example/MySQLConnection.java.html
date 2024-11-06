@@ -55,101 +55,110 @@ import java.sql.SQLException;
     public static void updateData(int UserID, String UserName, String PhoneNumber, String Address, Long CommuneID, Long ProviderID, Long DistrictID) {
 <span class="nc" id="L56">        String sql = &quot;UPDATE Users SET UserName = ?, PhoneNumber = ?, Address = ?, CommuneID = ?, ProviderID = ?, DistrictID = ? WHERE UserID = ?&quot;;</span>
     
-<span class="nc" id="L58">        try (Connection connection = getConnection();</span>
-<span class="nc" id="L59">             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (UserID &lt;= 0) {</span>
+<span class="nc" id="L59">            System.out.println(&quot;UserID không hợp lệ: &quot; + UserID);</span>
+<span class="nc" id="L60">            return;</span>
+        }
+<span class="nc bnc" id="L62" title="All 6 branches missed.">        if (UserName == null || PhoneNumber == null || Address == null) {</span>
+<span class="nc" id="L63">            System.out.println(&quot;Các thông tin cần thiết không được để trống.&quot;);</span>
+<span class="nc" id="L64">            return;</span>
+        }
+
+<span class="nc" id="L67">        try (Connection connection = getConnection();</span>
+<span class="nc" id="L68">             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {</span>
             
             // Thiết lập giá trị mới cho các cột
-<span class="nc" id="L62">            preparedStatement.setString(1, UserName);</span>
-<span class="nc" id="L63">            preparedStatement.setString(2, PhoneNumber);</span>
-<span class="nc" id="L64">            preparedStatement.setString(3, Address);</span>
-<span class="nc" id="L65">            preparedStatement.setObject(4, CommuneID);</span>
-<span class="nc" id="L66">            preparedStatement.setObject(5, ProviderID);</span>
-<span class="nc" id="L67">            preparedStatement.setObject(6, DistrictID);</span>
-<span class="nc" id="L68">            preparedStatement.setInt(7, UserID); // UserID xác định hàng cần cập nhật</span>
+<span class="nc" id="L71">            preparedStatement.setString(1, UserName);</span>
+<span class="nc" id="L72">            preparedStatement.setString(2, PhoneNumber);</span>
+<span class="nc" id="L73">            preparedStatement.setString(3, Address);</span>
+<span class="nc" id="L74">            preparedStatement.setObject(4, CommuneID);</span>
+<span class="nc" id="L75">            preparedStatement.setObject(5, ProviderID);</span>
+<span class="nc" id="L76">            preparedStatement.setObject(6, DistrictID);</span>
+<span class="nc" id="L77">            preparedStatement.setInt(7, UserID); // UserID xác định hàng cần cập nhật</span>
             
             // Thực thi câu lệnh
-<span class="nc" id="L71">            int rowsUpdated = preparedStatement.executeUpdate();</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">            if (rowsUpdated &gt; 0) {</span>
-<span class="nc" id="L73">                System.out.println(&quot;Cập nhật dữ liệu thành công!&quot;);</span>
+<span class="nc" id="L80">            int rowsUpdated = preparedStatement.executeUpdate();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">            if (rowsUpdated &gt; 0) {</span>
+<span class="nc" id="L82">                System.out.println(&quot;Cập nhật dữ liệu thành công!&quot;);</span>
             } else {
-<span class="nc" id="L75">                System.out.println(&quot;Không tìm thấy bản ghi nào với ID = &quot; + UserID);</span>
+<span class="nc" id="L84">                System.out.println(&quot;Không tìm thấy bản ghi nào với ID = &quot; + UserID);</span>
             }
-<span class="nc" id="L77">        } catch (SQLException e) {</span>
-<span class="nc" id="L78">            System.out.println(&quot;Lỗi khi kết nối hoặc cập nhật dữ liệu: &quot; + e.getMessage());</span>
-<span class="nc" id="L79">            e.printStackTrace();</span>
-<span class="nc" id="L80">        }</span>
-<span class="nc" id="L81">    }</span>
+<span class="nc" id="L86">        } catch (SQLException e) {</span>
+<span class="nc" id="L87">            System.out.println(&quot;Lỗi khi kết nối hoặc cập nhật dữ liệu: &quot; + e.getMessage());</span>
+<span class="nc" id="L88">            e.printStackTrace();</span>
+<span class="nc" id="L89">        }</span>
+<span class="nc" id="L90">    }</span>
 
     public static void deleteData(int UserID) {
-<span class="nc" id="L84">        String sql = &quot;DELETE FROM Users WHERE UserID = ?&quot;;</span>
+<span class="nc" id="L93">        String sql = &quot;DELETE FROM Users WHERE UserID = ?&quot;;</span>
     
-<span class="nc" id="L86">        try (Connection connection = getConnection();</span>
-<span class="nc" id="L87">             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {</span>
+<span class="nc" id="L95">        try (Connection connection = getConnection();</span>
+<span class="nc" id="L96">             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {</span>
             
             
-<span class="nc" id="L90">            preparedStatement.setInt(1, UserID); // UserID xác định hàng cần cập nhật</span>
+<span class="nc" id="L99">            preparedStatement.setInt(1, UserID); // UserID xác định hàng cần cập nhật</span>
             
             // Thực thi câu lệnh
-<span class="nc" id="L93">            int rowsDeleted = preparedStatement.executeUpdate();</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (rowsDeleted &gt; 0) {</span>
-<span class="nc" id="L95">            System.out.println(&quot;Xóa dữ liệu thành công!&quot;);</span>
+<span class="nc" id="L102">            int rowsDeleted = preparedStatement.executeUpdate();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (rowsDeleted &gt; 0) {</span>
+<span class="nc" id="L104">            System.out.println(&quot;Xóa dữ liệu thành công!&quot;);</span>
         } else {
-<span class="nc" id="L97">            System.out.println(&quot;Không tìm thấy bản ghi nào với UserID = &quot; + UserID);</span>
+<span class="nc" id="L106">            System.out.println(&quot;Không tìm thấy bản ghi nào với UserID = &quot; + UserID);</span>
         }
-<span class="nc" id="L99">    } catch (SQLException e) {</span>
-<span class="nc" id="L100">        System.out.println(&quot;Lỗi khi kết nối hoặc xóa dữ liệu: &quot; + e.getMessage());</span>
-<span class="nc" id="L101">        e.printStackTrace();</span>
-<span class="nc" id="L102">    }</span>
-<span class="nc" id="L103">    }</span>
+<span class="nc" id="L108">    } catch (SQLException e) {</span>
+<span class="nc" id="L109">        System.out.println(&quot;Lỗi khi kết nối hoặc xóa dữ liệu: &quot; + e.getMessage());</span>
+<span class="nc" id="L110">        e.printStackTrace();</span>
+<span class="nc" id="L111">    }</span>
+<span class="nc" id="L112">    }</span>
 
     public static void findByDistric(Long DistrictID, Long CommuneID){
-<span class="nc" id="L106">        String sql = &quot;SELECT * FROM Users WHERE DistrictID = ?&quot;;</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">        if (CommuneID != null){</span>
-<span class="nc" id="L108">            sql += &quot; AND CommuneID = ?&quot;;</span>
+<span class="nc" id="L115">        String sql = &quot;SELECT * FROM Users WHERE DistrictID = ?&quot;;</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        if (CommuneID != null){</span>
+<span class="nc" id="L117">            sql += &quot; AND CommuneID = ?&quot;;</span>
         }
 
-<span class="nc" id="L111">        try (Connection connection = getConnection();</span>
-<span class="nc" id="L112">            PreparedStatement preparedStatement = connection.prepareStatement(sql)){</span>
-<span class="nc" id="L113">                preparedStatement.setLong(1, DistrictID);</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">                if (CommuneID != null){</span>
-<span class="nc" id="L115">                    preparedStatement.setLong(2, CommuneID);</span>
+<span class="nc" id="L120">        try (Connection connection = getConnection();</span>
+<span class="nc" id="L121">            PreparedStatement preparedStatement = connection.prepareStatement(sql)){</span>
+<span class="nc" id="L122">                preparedStatement.setLong(1, DistrictID);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">                if (CommuneID != null){</span>
+<span class="nc" id="L124">                    preparedStatement.setLong(2, CommuneID);</span>
                 }
 
-<span class="nc" id="L118">            try (ResultSet resultSet = preparedStatement.executeQuery()) {</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L127">            try (ResultSet resultSet = preparedStatement.executeQuery()) {</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">            while (resultSet.next()) {</span>
                 // Giả sử bảng Users có các cột tương ứng với User model
-<span class="nc" id="L121">                int userID = resultSet.getInt(&quot;UserID&quot;);</span>
-<span class="nc" id="L122">                String userName = resultSet.getString(&quot;UserName&quot;);</span>
-<span class="nc" id="L123">                String phoneNumber = resultSet.getString(&quot;PhoneNumber&quot;);</span>
-<span class="nc" id="L124">                String address = resultSet.getString(&quot;Address&quot;);</span>
-<span class="nc" id="L125">                Long communeID = resultSet.getLong(&quot;CommuneID&quot;);</span>
-<span class="nc" id="L126">                Long providerID = resultSet.getLong(&quot;ProviderID&quot;);</span>
-<span class="nc" id="L127">                Long districtID = resultSet.getLong(&quot;DistrictID&quot;);</span>
+<span class="nc" id="L130">                int userID = resultSet.getInt(&quot;UserID&quot;);</span>
+<span class="nc" id="L131">                String userName = resultSet.getString(&quot;UserName&quot;);</span>
+<span class="nc" id="L132">                String phoneNumber = resultSet.getString(&quot;PhoneNumber&quot;);</span>
+<span class="nc" id="L133">                String address = resultSet.getString(&quot;Address&quot;);</span>
+<span class="nc" id="L134">                Long communeID = resultSet.getLong(&quot;CommuneID&quot;);</span>
+<span class="nc" id="L135">                Long providerID = resultSet.getLong(&quot;ProviderID&quot;);</span>
+<span class="nc" id="L136">                Long districtID = resultSet.getLong(&quot;DistrictID&quot;);</span>
 
-<span class="nc" id="L129">                System.out.println(&quot;UserID: &quot; + userID + &quot;, UserName: &quot; + userName + </span>
+<span class="nc" id="L138">                System.out.println(&quot;UserID: &quot; + userID + &quot;, UserName: &quot; + userName + </span>
                                    &quot;, PhoneNumber: &quot; + phoneNumber + &quot;, Address: &quot; + address +
                                    &quot;, CommuneID: &quot; + communeID + &quot;, ProviderID: &quot; + providerID +
                                    &quot;, DistrictID: &quot; + districtID);
-<span class="nc" id="L133">                }</span>
+<span class="nc" id="L142">                }</span>
             }
-<span class="nc" id="L135">    }catch (SQLException e) {</span>
-<span class="nc" id="L136">        System.out.println(&quot;Lỗi khi kết nối hoặc tìm kiếm dữ liệu: &quot; + e.getMessage());</span>
-<span class="nc" id="L137">        e.printStackTrace();</span>
-<span class="nc" id="L138">    }</span>
-<span class="nc" id="L139">}</span>
+<span class="nc" id="L144">    }catch (SQLException e) {</span>
+<span class="nc" id="L145">        System.out.println(&quot;Lỗi khi kết nối hoặc tìm kiếm dữ liệu: &quot; + e.getMessage());</span>
+<span class="nc" id="L146">        e.printStackTrace();</span>
+<span class="nc" id="L147">    }</span>
+<span class="nc" id="L148">}</span>
 
     public static void main(String[] args) {
-<span class="nc" id="L142">        Connection conn = getConnection();</span>
+<span class="nc" id="L151">        Connection conn = getConnection();</span>
         // Thực hiện các thao tác với cơ sở dữ liệu ở đây
         // ...
         
         try {
-<span class="nc bnc" id="L147" title="All 2 branches missed.">            if (conn != null) {</span>
-<span class="nc" id="L148">                conn.close(); // Đảm bảo đóng kết nối sau khi sử dụng</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">            if (conn != null) {</span>
+<span class="nc" id="L157">                conn.close(); // Đảm bảo đóng kết nối sau khi sử dụng</span>
             }
-<span class="nc" id="L150">        } catch (SQLException e) {</span>
-<span class="nc" id="L151">            e.printStackTrace();</span>
-<span class="nc" id="L152">        }</span>
-<span class="nc" id="L153">    }</span>
+<span class="nc" id="L159">        } catch (SQLException e) {</span>
+<span class="nc" id="L160">            e.printStackTrace();</span>
+<span class="nc" id="L161">        }</span>
+<span class="nc" id="L162">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

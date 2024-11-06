@@ -3,8 +3,6 @@ package com.example.service;
 import com.example.MySQLConnection;
 import com.example.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserService implements UserRepository {
 
