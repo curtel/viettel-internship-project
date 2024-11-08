@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         populateCommunes(selectedDistrict);
     });
 
+    // Lắng nghe sự kiện khi chọn nhà cung cấp
     searchProvider.addEventListener('change', (event) => {
         const selectedProvider = event.target.value;
         populateCommunes(selectedProvider);
@@ -136,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-        // Lắng nghe sự kiện khi chọn tỉnh trong modal
+    // Lắng nghe sự kiện khi chọn tỉnh trong modal
     document.getElementById('edit-province').addEventListener('change', (event) => {
         const selectedProvince = event.target.value;
         populateDistrictsForEdit(selectedProvince);
@@ -191,9 +192,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.getElementById('edit-customer-form').dataset.id = customerId;
 
-
             // Cập nhật dropdown tỉnh
-            document.getElementById('edit-province').innerHTML = '<option value="">Chọn tỉnh</option>'; // Reset dropdown
+            document.getElementById('edit-province').innerHTML = '<option value="">Chọn tỉnh</option>'; 
             provinces.forEach(province => {
                 const option = document.createElement('option');
                 option.value = province.id;
@@ -208,11 +208,11 @@ document.addEventListener('DOMContentLoaded', () => {
             populateDistrictsForEdit(customer.province);
 
             // Cập nhật dropdown xã dựa trên huyện đã chọn
-            const selectedDistrict = districts.find(district => district.name === customer.district).id; // Sửa dòng này
+            const selectedDistrict = districts.find(district => district.name === customer.district).id; 
             populateCommunesForEdit(selectedDistrict);
 
             // Cập nhật dropdown nhà cung cấp
-            document.getElementById('edit-provider').innerHTML = '<option value="">Chọn nhà cung cấp</option>'; // Reset dropdown
+            document.getElementById('edit-provider').innerHTML = '<option value="">Chọn nhà cung cấp</option>'; 
             providers.forEach(provider => {
                 const option = document.createElement('option');
                 option.value = provider.id;
@@ -265,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
     const modal = document.getElementById('edit-modal');
 
     const closeModalButton1 = document.getElementById('close-modal');{
@@ -272,6 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.style.display='none';
         })
     }
+
     window.addEventListener('click', (event) => {
         if (event.target == modal) {
             modal.style.display = 'none';
@@ -282,7 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleDelete(event) {
         const customerId = event.target.getAttribute('data-id');
         const index = customers.findIndex(cust => cust.id == customerId);
-
         if (index > -1) {
             customers.splice(index, 1);
             renderTable(customers);
@@ -352,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
 
-    
+    //Hiển thị kết quả sau khi lọc
     function filterCustomers() {
         const searchName = searchInput.value.toLowerCase();
         const selectedProvince = searchProvince.value;
@@ -380,6 +381,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderTable();
 
-    
     create(provinces, districts, communes, providers);
 });
